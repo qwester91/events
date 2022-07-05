@@ -1,6 +1,7 @@
 package ya.qwester345.events.controllers;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ya.qwester345.events.dao.entity.Event;
@@ -25,7 +26,8 @@ public class EventController {
 
 
     @PostMapping("/{type}")
-    public ResponseEntity<Event> addEvent(@PathVariable EventType type, @RequestBody EventCreateDto eventCreate){
+    @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Event> addEvent(@PathVariable String type, @RequestBody EventCreateDto eventCreate){
         return new ResponseEntity<>(this.eventService.add(eventCreate), HttpStatus.CREATED);
 
     }
@@ -42,7 +44,7 @@ public class EventController {
     }
 
     @PutMapping("{type}/{uuid}/dt_update/{dt_update}")
-    public void updateEvent(@PathVariable EventType type, @PathVariable UUID uuid,
+    public void updateEvent(@PathVariable(name = "type") EventType type, @PathVariable(name = "uuid") UUID uuid,
                             @PathVariable(name = "dt_update") Long dtUpdate,
                             @RequestBody EventCreateDto eventCreateDto){
         LocalDateTime lastKnowDtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());

@@ -6,6 +6,7 @@ import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventType;
 import ya.qwester345.events.dto.EventCreateDto;
 import ya.qwester345.events.dto.PageOfEvents;
+import ya.qwester345.events.dto.PageOfEventsBuilder;
 import ya.qwester345.events.service.api.IEventService;
 
 import java.time.LocalDateTime;
@@ -21,12 +22,23 @@ public class EventService implements IEventService {
 
     @Override
     public Event add(EventCreateDto eventCreate) {
-        return null;
+        Event event = new Event();
+        event.setDtEvent(eventCreate.getDtEvent());
+        event.setCurrency(eventCreate.getCurrency());
+        event.setDescription(eventCreate.getDescription());
+        event.setStatus(eventCreate.getStatus());
+        event.setTitle(eventCreate.getTitle());
+        event.setType(eventCreate.getType());
+        event.setDtEndOfSale(eventCreate.getDtEndOfSale());
+//        event.setDtCreate(LocalDateTime.now());
+//        event.setDtUpdate(event.getDtCreate());
+        this.dao.save(event);
+        return event;
     }
 
     @Override
     public PageOfEvents getByType(EventType type, Integer page, Integer size) {
-        return null;
+        return new PageOfEventsBuilder().build();
     }
 
     @Override

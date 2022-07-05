@@ -3,13 +3,11 @@ package ya.qwester345.events.dao.entity;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 @Entity
+
 public class BaseEssence {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -42,5 +40,17 @@ public class BaseEssence {
 
     public LocalDateTime getDtUpdate() {
         return dtUpdate;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setDtCreate(LocalDateTime dtCreate) {
+        this.dtCreate = dtCreate;
+    }
+
+    public void setDtUpdate(LocalDateTime dtUpdate) {
+        this.dtUpdate = dtUpdate;
     }
 }
