@@ -14,43 +14,51 @@ public class PageOfEventsBuilder implements IPageOfEventsBuilder {
     }
 
     @Override
-    public void setNumber(int number) {
+    public PageOfEventsBuilder setNumber(int number) {
         pageOfEvents.setNumber(number);
+        return this;
     }
 
     @Override
-    public void setSize(int size) {
+    public PageOfEventsBuilder setSize(int size) {
         pageOfEvents.setSize(size);
+        return this;
     }
 
     @Override
-    public void setTotalPages(int totalPages) {
+    public PageOfEventsBuilder setTotalPages(int totalPages) {
         pageOfEvents.setTotalPages(totalPages);
+        return this;
     }
 
     @Override
-    public void setTotalElements(int totalElements) {
+    public PageOfEventsBuilder setTotalElements(int totalElements) {
         pageOfEvents.setTotalElements(totalElements);
+        return this;
     }
 
     @Override
-    public void setFirst(boolean first) {
+    public PageOfEventsBuilder setFirst(boolean first) {
         pageOfEvents.setFirst(first);
+        return this;
     }
 
     @Override
-    public void setNumberOfElements(int numberOfElements) {
+    public PageOfEventsBuilder setNumberOfElements(int numberOfElements) {
         pageOfEvents.setNumberOfElements(numberOfElements);
+        return this;
     }
 
     @Override
-    public void setLast(boolean last) {
+    public PageOfEventsBuilder setLast(boolean last) {
         pageOfEvents.setLast(last);
+        return this;
     }
 
     @Override
-    public void setEvents(List<Event> events) {
+    public PageOfEventsBuilder setEvents(List<Event> events) {
         pageOfEvents.setEvents(events);
+        return this;
     }
 
     @Override

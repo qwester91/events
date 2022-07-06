@@ -1,6 +1,8 @@
 package ya.qwester345.events.dao.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import ya.qwester345.events.dao.entity.enums.EventStatus;
+import ya.qwester345.events.dao.entity.enums.EventType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -38,12 +40,24 @@ public class Event {
     public Event() {
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
 
+    public LocalDateTime getDtCreate() {
+        return dtCreate;
+    }
+
     public void setDtCreate(LocalDateTime dtCreate) {
         this.dtCreate = dtCreate;
+    }
+
+    public LocalDateTime getDtUpdate() {
+        return dtUpdate;
     }
 
     public void setDtUpdate(LocalDateTime dtUpdate) {

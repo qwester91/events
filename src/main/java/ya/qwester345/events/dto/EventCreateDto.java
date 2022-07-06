@@ -1,10 +1,8 @@
 package ya.qwester345.events.dto;
 
-import org.springframework.context.annotation.Bean;
-import ya.qwester345.events.dao.entity.EventStatus;
-import ya.qwester345.events.dao.entity.EventType;
+import ya.qwester345.events.dao.entity.enums.EventStatus;
+import ya.qwester345.events.dao.entity.enums.EventType;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
