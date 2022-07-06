@@ -1,14 +1,11 @@
 package ya.qwester345.events.dao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 @Entity
-@MappedSuperclass
-public class EventFilm extends Event {
+@Table(name = "eventFilm", schema = "events")
+public class EventFilm  {
     @Id
     private UUID uuid;
     @Column
@@ -22,6 +19,14 @@ public class EventFilm extends Event {
 
     public EventFilm() {
     }
+
+//    public EventFilm(UUID uuid, UUID country, Integer releaseYear, LocalDate releaseDate, Integer duration) {
+//        this.uuid = uuid;
+//        this.country = country;
+//        this.releaseYear = releaseYear;
+//        this.releaseDate = releaseDate;
+//        this.duration = duration;
+//    }
 
     public UUID getUuid() {
         return uuid;

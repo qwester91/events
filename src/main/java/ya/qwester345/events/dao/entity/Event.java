@@ -8,15 +8,10 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Table(name = "event", schema = "events")
+
+
 public class Event {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     private UUID uuid;
     @Column(name = "dt_create")
     private LocalDateTime dtCreate;

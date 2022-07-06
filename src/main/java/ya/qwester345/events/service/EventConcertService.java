@@ -1,8 +1,7 @@
 package ya.qwester345.events.service;
 
 import org.springframework.stereotype.Service;
-import ya.qwester345.events.dao.api.IEventDao;
-import ya.qwester345.events.dao.entity.Event;
+import ya.qwester345.events.dao.api.IEventConcertDao;
 import ya.qwester345.events.dao.entity.EventConcert;
 import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.EventCreateDto;
@@ -15,26 +14,26 @@ import java.util.UUID;
 
 @Service
 public class EventConcertService implements IEventService <EventConcert> {
-    private final IEventDao dao;
+    private final IEventConcertDao dao;
 
-    public EventConcertService(IEventDao dao) {
+    public EventConcertService(IEventConcertDao dao) {
         this.dao = dao;
     }
 
     @Override
     public EventConcert add(EventCreateDto eventCreate, EventType type) {
         EventConcert event = new EventConcert();
-        event.setDtEvent(eventCreate.getDtEvent());
-        event.setCurrency(eventCreate.getCurrency());
-        event.setDescription(eventCreate.getDescription());
-        event.setStatus(eventCreate.getStatus());
-        event.setTitle(eventCreate.getTitle());
-        event.setType(eventCreate.getType());
-        event.setDtEndOfSale(eventCreate.getDtEndOfSale());
-        event.setDtCreate(LocalDateTime.now());
-        event.setDtUpdate(event.getDtCreate());
-        event.setUuid(UUID.randomUUID());
-        this.dao.save(event);
+//        event.setDtEvent(eventCreate.getDtEvent());
+//        event.setCurrency(eventCreate.getCurrency());
+//        event.setDescription(eventCreate.getDescription());
+//        event.setStatus(eventCreate.getStatus());
+//        event.setTitle(eventCreate.getTitle());
+//        event.setType(eventCreate.getType());
+//        event.setDtEndOfSale(eventCreate.getDtEndOfSale());
+//        event.setDtCreate(LocalDateTime.now());
+//        event.setDtUpdate(event.getDtCreate());
+//        event.setUuid(UUID.randomUUID());
+//        this.dao.save(event);
 
 
         return event;
@@ -47,7 +46,8 @@ public class EventConcertService implements IEventService <EventConcert> {
 
     @Override
     public EventConcert getByUuid(UUID uuid) {
-        return dao.findEventConcertByUuid(uuid);
+//        return dao.findEventConcertByUuid(uuid);
+        return null;
     }
 
     @Override

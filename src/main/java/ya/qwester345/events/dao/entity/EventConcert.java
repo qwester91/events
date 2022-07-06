@@ -1,13 +1,11 @@
 package ya.qwester345.events.dao.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.UUID;
 @Entity
-@MappedSuperclass
-public class EventConcert extends Event{
+
+@Table(name = "eventConcert", schema = "events")
+public class EventConcert {
     @Id
     private UUID uuid;
     @Column
@@ -15,6 +13,11 @@ public class EventConcert extends Event{
 
     public EventConcert() {
     }
+
+   // public EventConcert(UUID uuid, UUID category) {
+   //     this.uuid = uuid;
+   //     this.category = category;
+   // }
 
     public UUID getUuid() {
         return uuid;

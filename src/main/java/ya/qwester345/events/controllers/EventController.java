@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ya.qwester345.events.dao.entity.Event;
+import ya.qwester345.events.dao.entity.EventConcert;
 import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.EventCreateDto;
 import ya.qwester345.events.dto.PageOfEvents;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/afisha/event/")
 public class EventController {
-    private final IEventService <Event> eventService;
+    private final IEventService <EventConcert> eventService;
 
     public EventController(IEventService eventService) {
         this.eventService = eventService;
@@ -26,7 +27,7 @@ public class EventController {
 
 
     @PostMapping("/{type}")
-    public ResponseEntity<Event> addEvent(@PathVariable String type, @RequestBody EventCreateDto eventCreate){
+    public ResponseEntity<EventConcert> addEvent(@PathVariable String type, @RequestBody EventCreateDto eventCreate){
         return new ResponseEntity<>(this.eventService.add(eventCreate, EventType.valueOf(type)), HttpStatus.CREATED);
 
     }
@@ -38,7 +39,7 @@ public class EventController {
 
     }
     @GetMapping("/{uuid}")
-    public Event getEventsByUuid(@PathVariable UUID uuid){
+    public EventConcert getEventsByUuid(@PathVariable UUID uuid){
         return eventService.getByUuid(uuid);
     }
 
