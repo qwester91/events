@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 @Entity
 @Table(name = "eventFilm", schema = "events")
-public class EventFilm implements IEvent  {
+public class EventFilm extends Event{
     @Id
     private UUID uuid;
     @Column

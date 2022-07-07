@@ -1,27 +1,30 @@
 package ya.qwester345.events.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ya.qwester345.events.dao.api.IEventConcertDao;
+import ya.qwester345.events.dao.api.IEventDao;
+import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventConcert;
 import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.EventCreateDto;
-import ya.qwester345.events.dto.PageOfEvents;
-import ya.qwester345.events.dto.PageOfEventsBuilder;
 import ya.qwester345.events.service.api.IEventService;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
+@Qualifier("EventConcertService")
 public class EventConcertService implements IEventService <EventConcert> {
-    private final IEventConcertDao dao;
+    private final IEventDao dao;
 
-    public EventConcertService(IEventConcertDao dao) {
+    public EventConcertService(IEventDao dao) {
         this.dao = dao;
     }
 
     @Override
-    public EventConcert add(EventCreateDto eventCreate, EventType type) {
+    public EventConcert add(EventCreateDto eventCreate) {
         EventConcert event = new EventConcert();
 //        event.setDtEvent(eventCreate.getDtEvent());
 //        event.setCurrency(eventCreate.getCurrency());
@@ -40,8 +43,8 @@ public class EventConcertService implements IEventService <EventConcert> {
     }
 
     @Override
-    public PageOfEvents getByType(EventType type, Integer page, Integer size) {
-        return new PageOfEventsBuilder().build();
+    public Page<Event> getByType(EventType type, Pageable pagiable) {
+        return dao.findAllByActionType(type, pagiable);
     }
 
     @Override

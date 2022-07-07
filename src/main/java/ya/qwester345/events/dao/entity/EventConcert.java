@@ -5,7 +5,7 @@ import java.util.UUID;
 @Entity
 
 @Table(name = "eventConcert", schema = "events")
-public class EventConcert implements IEvent {
+public class EventConcert extends Event {
     @Id
     private UUID uuid;
     @Column

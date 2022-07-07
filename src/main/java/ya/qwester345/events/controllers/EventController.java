@@ -1,14 +1,21 @@
 package ya.qwester345.events.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventConcert;
+import ya.qwester345.events.dao.entity.EventFilm;
 import ya.qwester345.events.dao.entity.enums.EventType;
+import ya.qwester345.events.dto.ConcertCreateDto;
 import ya.qwester345.events.dto.EventCreateDto;
-import ya.qwester345.events.dto.PageOfEvents;
+import ya.qwester345.events.dto.FilmCreateDto;
+import ya.qwester345.events.service.EventConcertService;
+import ya.qwester345.events.service.EventFilmService;
 import ya.qwester345.events.service.api.IEventService;
 
 import java.time.Instant;
@@ -19,28 +26,44 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/afisha/event/")
 public class EventController {
-    private final IEventService <EventConcert> eventService;
 
-    public EventController(IEventService eventService) {
-        this.eventService = eventService;
+    @Qualifier("EventConcertService")
+    private final IEventService<EventConcert> eventConcertService;
+
+    @Qualifier("EventFilmService")
+    private final IEventService<EventFilm> eventFilmService;
+
+
+    public EventController(IEventService<EventConcert> eventConcertService, IEventService<EventFilm> eventFilmService) {
+        this.eventConcertService = eventConcertService;
+        this.eventFilmService = eventFilmService;
     }
 
+    @PostMapping("/CONCERTS")
+    public ResponseEntity<EventConcert> addConcert(@RequestBody ConcertCreateDto eventCreate){
+        return new ResponseEntity<>(this.eventConcertService.add(eventCreate), HttpStatus.CREATED);
 
-    @PostMapping("/{type}")
-    public ResponseEntity<EventConcert> addEvent(@PathVariable String type, @RequestBody EventCreateDto eventCreate){
-        return new ResponseEntity<>(this.eventService.add(eventCreate, EventType.valueOf(type)), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/FILMS")
+    public ResponseEntity<EventFilm> addFilm( @RequestBody FilmCreateDto eventCreate){
+        return new ResponseEntity<>(this.eventFilmService.add(eventCreate), HttpStatus.CREATED);
 
     }
 
     @GetMapping("/{type}")
-    public PageOfEvents getEventsByType(@PathVariable EventType type, @RequestParam("page") Integer page,
-                                        @RequestParam("size") Integer size){
-        return eventService.getByType(type, page, size);
+    public Page<Event> getEventsByType(@PathVariable EventType type, @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                @RequestParam(value = "size", defaultValue = "10") Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        if (type == EventType.CONCERTS){
+            return eventConcertService.getByType(type,pageable);
+        }
+        return eventFilmService.getByType(type, pageable);
 
     }
     @GetMapping("/{uuid}")
     public EventConcert getEventsByUuid(@PathVariable UUID uuid){
-        return eventService.getByUuid(uuid);
+        return eventConcertService.getByUuid(uuid);
     }
 
     @PutMapping("{type}/{uuid}/dt_update/{dt_update}")
@@ -48,7 +71,7 @@ public class EventController {
                             @PathVariable(name = "dt_update") Long dtUpdate,
                             @RequestBody EventCreateDto eventCreateDto){
         LocalDateTime lastKnowDtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
-        this.eventService.update(type, uuid, lastKnowDtUpdate, eventCreateDto);
+        this.eventConcertService.update(type, uuid, lastKnowDtUpdate, eventCreateDto);
     }
 
 

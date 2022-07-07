@@ -10,7 +10,7 @@ import java.util.Enumeration;
 import java.util.UUID;
 
 
-
+@Entity
 public class Event {
     @Id
     private UUID uuid;
@@ -33,12 +33,12 @@ public class Event {
     @Column
     private UUID currency;
 
-    @OneToOne(targetEntity = IEvent.class, cascade = CascadeType.ALL)
-    @JoinTable(name = "event_film",
-            joinColumns = @JoinColumn(name = "event_uuid", referencedColumnName = "uuid"),
-            inverseJoinColumns = @JoinColumn(name = "action_uuid", referencedColumnName = "uuid")
-    )
-    private IEvent thatEvent;
+//    @OneToOne(targetEntity = IEvent.class, cascade = CascadeType.ALL)
+//    @JoinTable(name = "event_film",
+//            joinColumns = @JoinColumn(name = "event_uuid", referencedColumnName = "uuid"),
+//            inverseJoinColumns = @JoinColumn(name = "action_uuid", referencedColumnName = "uuid")
+//    )
+
 
     public Event() {
     }
