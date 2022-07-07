@@ -6,6 +6,7 @@ import java.util.UUID;
 
 @Table(name = "eventConcert", schema = "events")
 public class EventConcert extends Event {
+//    @SecondaryTable()
     @Id
     private UUID uuid;
     @Column

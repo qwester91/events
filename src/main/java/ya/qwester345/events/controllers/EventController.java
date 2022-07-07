@@ -66,12 +66,19 @@ public class EventController {
         return eventConcertService.getByUuid(uuid);
     }
 
-    @PutMapping("{type}/{uuid}/dt_update/{dt_update}")
-    public void updateEvent(@PathVariable(name = "type") EventType type, @PathVariable(name = "uuid") UUID uuid,
+    @PutMapping("FILMS/{uuid}/dt_update/{dt_update}")
+    public void updateFilm( @PathVariable(name = "uuid") UUID uuid,
                             @PathVariable(name = "dt_update") Long dtUpdate,
                             @RequestBody EventCreateDto eventCreateDto){
         LocalDateTime lastKnowDtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
-        this.eventConcertService.update(type, uuid, lastKnowDtUpdate, eventCreateDto);
+        this.eventConcertService.update(EventType.FILMS, uuid, lastKnowDtUpdate, eventCreateDto);
+    }
+    @PutMapping("CONCERTS/{uuid}/dt_update/{dt_update}")
+    public void updateConcert(@PathVariable(name = "uuid") UUID uuid,
+                            @PathVariable(name = "dt_update") Long dtUpdate,
+                            @RequestBody EventCreateDto eventCreateDto){
+        LocalDateTime lastKnowDtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
+        this.eventConcertService.update(EventType.CONCERTS, uuid, lastKnowDtUpdate, eventCreateDto);
     }
 
 
