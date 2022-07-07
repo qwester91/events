@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 @Entity
 @Table(name = "eventFilm", schema = "events")
-public class EventFilm  {
+public class EventFilm implements IEvent  {
     @Id
     private UUID uuid;
     @Column
@@ -20,13 +20,6 @@ public class EventFilm  {
     public EventFilm() {
     }
 
-//    public EventFilm(UUID uuid, UUID country, Integer releaseYear, LocalDate releaseDate, Integer duration) {
-//        this.uuid = uuid;
-//        this.country = country;
-//        this.releaseYear = releaseYear;
-//        this.releaseDate = releaseDate;
-//        this.duration = duration;
-//    }
 
     public UUID getUuid() {
         return uuid;

@@ -5,7 +5,7 @@ import java.util.UUID;
 @Entity
 
 @Table(name = "eventConcert", schema = "events")
-public class EventConcert {
+public class EventConcert implements IEvent {
     @Id
     private UUID uuid;
     @Column
@@ -14,10 +14,7 @@ public class EventConcert {
     public EventConcert() {
     }
 
-   // public EventConcert(UUID uuid, UUID category) {
-   //     this.uuid = uuid;
-   //     this.category = category;
-   // }
+
 
     public UUID getUuid() {
         return uuid;

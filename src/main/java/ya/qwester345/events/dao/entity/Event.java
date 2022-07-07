@@ -6,6 +6,7 @@ import ya.qwester345.events.dao.entity.enums.EventType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Enumeration;
 import java.util.UUID;
 
 
@@ -31,6 +32,13 @@ public class Event {
     private EventStatus status;
     @Column
     private UUID currency;
+
+    @OneToOne(targetEntity = IEvent.class, cascade = CascadeType.ALL)
+    @JoinTable(name = "event_film",
+            joinColumns = @JoinColumn(name = "event_uuid", referencedColumnName = "uuid"),
+            inverseJoinColumns = @JoinColumn(name = "action_uuid", referencedColumnName = "uuid")
+    )
+    private IEvent thatEvent;
 
     public Event() {
     }
