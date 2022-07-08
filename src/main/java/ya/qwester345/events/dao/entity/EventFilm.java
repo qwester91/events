@@ -4,30 +4,22 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 @Entity
-@Table(name = "eventFilm", schema = "events")
+@Table(name = "event",schema = "events")
+@SecondaryTable(name = "film",pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid_film"),schema = "events")
+
 public class EventFilm extends Event{
-    @Id
-    private UUID uuid;
-    @Column
+
     private UUID country;
-    @Column
+
     private Integer releaseYear;
-    @Column
+
     private LocalDate releaseDate;
-    @Column
+
     private Integer duration;
 
     public EventFilm() {
     }
-
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
+    @Column(table = "film")
 
     public UUID getCountry() {
         return country;
@@ -36,7 +28,7 @@ public class EventFilm extends Event{
     public void setCountry(UUID country) {
         this.country = country;
     }
-
+    @Column(table = "film")
     public Integer getReleaseYear() {
         return releaseYear;
     }
@@ -44,7 +36,7 @@ public class EventFilm extends Event{
     public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
-
+    @Column(table = "film")
     public LocalDate getReleaseDate() {
         return releaseDate;
     }
@@ -52,7 +44,7 @@ public class EventFilm extends Event{
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
-
+    @Column(table = "film")
     public Integer getDuration() {
         return duration;
     }

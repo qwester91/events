@@ -16,7 +16,9 @@ import ya.qwester345.events.dto.EventCreateDto;
 import ya.qwester345.events.dto.FilmCreateDto;
 import ya.qwester345.events.service.EventConcertService;
 import ya.qwester345.events.service.EventFilmService;
+import ya.qwester345.events.service.ServiceFactory;
 import ya.qwester345.events.service.api.IEventService;
+import ya.qwester345.events.service.api.IFactory;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -27,59 +29,42 @@ import java.util.UUID;
 @RequestMapping("/api/v1/afisha/event/")
 public class EventController {
 
-    @Qualifier("EventConcertService")
-    private final IEventService<EventConcert> eventConcertService;
-
-    @Qualifier("EventFilmService")
-    private final IEventService<EventFilm> eventFilmService;
+   private final IFactory factory;
 
 
-    public EventController(IEventService<EventConcert> eventConcertService, IEventService<EventFilm> eventFilmService) {
-        this.eventConcertService = eventConcertService;
-        this.eventFilmService = eventFilmService;
+    public EventController(IFactory factory) {
+        this.factory = factory;
     }
 
-    @PostMapping("/CONCERTS")
-    public ResponseEntity<EventConcert> addConcert(@RequestBody ConcertCreateDto eventCreate){
-        return new ResponseEntity<>(this.eventConcertService.add(eventCreate), HttpStatus.CREATED);
+    @PostMapping("/{type}")
+    public ResponseEntity<Event> addEvent(@PathVariable(name = "type") String type ,@RequestBody EventCreateDto eventCreate){
+        return new ResponseEntity<>(this.factory.add(EventType.valueOf(type), eventCreate), HttpStatus.CREATED);
 
     }
 
-    @PostMapping("/FILMS")
-    public ResponseEntity<EventFilm> addFilm( @RequestBody FilmCreateDto eventCreate){
-        return new ResponseEntity<>(this.eventFilmService.add(eventCreate), HttpStatus.CREATED);
 
-    }
 
     @GetMapping("/{type}")
-    public Page<Event> getEventsByType(@PathVariable EventType type, @RequestParam(value = "page", defaultValue = "1") Integer page,
+    public Page<Event> getEventsByType(@PathVariable String type, @RequestParam(value = "page", defaultValue = "1") Integer page,
                                 @RequestParam(value = "size", defaultValue = "10") Integer size){
         Pageable pageable = PageRequest.of(page, size);
-        if (type == EventType.CONCERTS){
-            return eventConcertService.getByType(type,pageable);
-        }
-        return eventFilmService.getByType(type, pageable);
+
+        return factory.getByType(EventType.valueOf(type), pageable);
 
     }
-    @GetMapping("/{uuid}")
-    public EventConcert getEventsByUuid(@PathVariable UUID uuid){
-        return eventConcertService.getByUuid(uuid);
+    @GetMapping("/{type}/{uuid}")
+    public Event getEventsByUuid(@PathVariable(name = "type")String type,@PathVariable UUID uuid){
+        return factory.getByUuid(EventType.valueOf(type),uuid);
     }
 
-    @PutMapping("FILMS/{uuid}/dt_update/{dt_update}")
-    public void updateFilm( @PathVariable(name = "uuid") UUID uuid,
+    @PutMapping("{type}/{uuid}/dt_update/{dt_update}")
+    public void updateEvent(@PathVariable(name = "type")String type, @PathVariable(name = "uuid") UUID uuid,
                             @PathVariable(name = "dt_update") Long dtUpdate,
                             @RequestBody EventCreateDto eventCreateDto){
         LocalDateTime lastKnowDtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
-        this.eventConcertService.update(EventType.FILMS, uuid, lastKnowDtUpdate, eventCreateDto);
+        this.factory.update(EventType.valueOf(type), uuid, lastKnowDtUpdate, eventCreateDto);
     }
-    @PutMapping("CONCERTS/{uuid}/dt_update/{dt_update}")
-    public void updateConcert(@PathVariable(name = "uuid") UUID uuid,
-                            @PathVariable(name = "dt_update") Long dtUpdate,
-                            @RequestBody EventCreateDto eventCreateDto){
-        LocalDateTime lastKnowDtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
-        this.eventConcertService.update(EventType.CONCERTS, uuid, lastKnowDtUpdate, eventCreateDto);
-    }
+
 
 
 

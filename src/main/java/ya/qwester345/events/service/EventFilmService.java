@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ya.qwester345.events.dao.api.IEventConcertDao;
+import ya.qwester345.events.dao.api.IEventFilmDao;
 import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventFilm;
 import ya.qwester345.events.dao.entity.enums.EventType;
@@ -16,6 +18,12 @@ import java.util.UUID;
 @Service
 @Qualifier("EventFilmService")
 public class EventFilmService implements IEventService<EventFilm> {
+    private final IEventFilmDao dao;
+
+    public EventFilmService(IEventFilmDao dao) {
+        this.dao = dao;
+    }
+
     @Override
     public EventFilm add(EventCreateDto eventCreate) {
         return null;

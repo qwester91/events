@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ya.qwester345.events.dao.api.IEventDao;
+import ya.qwester345.events.dao.api.IEventConcertDao;
 import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventConcert;
 import ya.qwester345.events.dao.entity.enums.EventType;
@@ -17,9 +17,9 @@ import java.util.UUID;
 @Service
 @Qualifier("EventConcertService")
 public class EventConcertService implements IEventService <EventConcert> {
-    private final IEventDao dao;
+    private final IEventConcertDao dao;
 
-    public EventConcertService(IEventDao dao) {
+    public EventConcertService(IEventConcertDao dao) {
         this.dao = dao;
     }
 
@@ -43,8 +43,8 @@ public class EventConcertService implements IEventService <EventConcert> {
     }
 
     @Override
-    public Page<Event> getByType(EventType type, Pageable pagiable) {
-        return dao.findAllByActionType(type, pagiable);
+    public Page<Event> getByType(EventType type, Pageable pageable) {
+        return dao.findAllByType(type, pageable);
     }
 
     @Override

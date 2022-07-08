@@ -10,39 +10,33 @@ import java.util.Enumeration;
 import java.util.UUID;
 
 
-@Entity
+@MappedSuperclass
 public class Event {
-    @Id
-    private UUID uuid;
-    @Column(name = "dt_create")
-    private LocalDateTime dtCreate;
-    @Column(name = "dt_update")
-    private LocalDateTime dtUpdate;
-    @Column
-    private String title;
-    @Column
-    private String description;
-    @Column
-    private LocalDateTime dtEvent;
-    @Column
-    private LocalDateTime dtEndOfSale;
-    @Column
-    private EventType type;
-    @Column
-    private EventStatus status;
-    @Column
-    private UUID currency;
 
-//    @OneToOne(targetEntity = IEvent.class, cascade = CascadeType.ALL)
-//    @JoinTable(name = "event_film",
-//            joinColumns = @JoinColumn(name = "event_uuid", referencedColumnName = "uuid"),
-//            inverseJoinColumns = @JoinColumn(name = "action_uuid", referencedColumnName = "uuid")
-//    )
+    private UUID uuid;
+
+    private LocalDateTime dtCreate;
+
+    private LocalDateTime dtUpdate;
+
+    private String title;
+
+    private String description;
+
+    private LocalDateTime dtEvent;
+
+    private LocalDateTime dtEndOfSale;
+
+    private EventType type;
+
+    private EventStatus status;
+
+    private UUID currency;
 
 
     public Event() {
     }
-
+    @Id
     public UUID getUuid() {
         return uuid;
     }
@@ -50,7 +44,7 @@ public class Event {
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
-
+@Column
     public LocalDateTime getDtCreate() {
         return dtCreate;
     }
@@ -98,7 +92,8 @@ public class Event {
     public void setDtEndOfSale(LocalDateTime dtEndOfSale) {
         this.dtEndOfSale = dtEndOfSale;
     }
-
+    @Column
+    @Enumerated(EnumType.STRING)
     public EventType getType() {
         return type;
     }
@@ -106,7 +101,7 @@ public class Event {
     public void setType(EventType type) {
         this.type = type;
     }
-
+    @Enumerated(EnumType.STRING)
     public EventStatus getStatus() {
         return status;
     }
