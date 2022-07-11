@@ -12,25 +12,15 @@ import java.util.UUID;
 
 @MappedSuperclass
 public class Event {
-
     private UUID uuid;
-
     private LocalDateTime dtCreate;
-
     private LocalDateTime dtUpdate;
-
     private String title;
-
     private String description;
-
     private LocalDateTime dtEvent;
-
     private LocalDateTime dtEndOfSale;
-
     private EventType type;
-
     private EventStatus status;
-
     private UUID currency;
 
 
@@ -44,7 +34,7 @@ public class Event {
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
-@Column
+    @Column
     public LocalDateTime getDtCreate() {
         return dtCreate;
     }

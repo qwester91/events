@@ -1,23 +1,12 @@
 package ya.qwester345.events.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ya.qwester345.events.dao.entity.Event;
-import ya.qwester345.events.dao.entity.EventConcert;
-import ya.qwester345.events.dao.entity.EventFilm;
 import ya.qwester345.events.dao.entity.enums.EventType;
-import ya.qwester345.events.dto.ConcertCreateDto;
-import ya.qwester345.events.dto.EventCreateDto;
-import ya.qwester345.events.dto.FilmCreateDto;
-import ya.qwester345.events.service.EventConcertService;
-import ya.qwester345.events.service.EventFilmService;
-import ya.qwester345.events.service.ServiceFactory;
-import ya.qwester345.events.service.api.IEventService;
+import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.api.IFactory;
 
 import java.time.Instant;
@@ -37,7 +26,7 @@ public class EventController {
     }
 
     @PostMapping("/{type}")
-    public ResponseEntity<Event> addEvent(@PathVariable(name = "type") String type ,@RequestBody EventCreateDto eventCreate){
+    public ResponseEntity<Event> addEvent(@PathVariable(name = "type") String type ,@RequestBody EventDtoFactory eventCreate){
         return new ResponseEntity<>(this.factory.add(EventType.valueOf(type), eventCreate), HttpStatus.CREATED);
 
     }
@@ -60,7 +49,7 @@ public class EventController {
     @PutMapping("{type}/{uuid}/dt_update/{dt_update}")
     public void updateEvent(@PathVariable(name = "type")String type, @PathVariable(name = "uuid") UUID uuid,
                             @PathVariable(name = "dt_update") Long dtUpdate,
-                            @RequestBody EventCreateDto eventCreateDto){
+                            @RequestBody EventDtoFactory eventCreateDto){
         LocalDateTime lastKnowDtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
         this.factory.update(EventType.valueOf(type), uuid, lastKnowDtUpdate, eventCreateDto);
     }

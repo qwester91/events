@@ -8,10 +8,14 @@ import ya.qwester345.events.dao.api.IEventConcertDao;
 import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventConcert;
 import ya.qwester345.events.dao.entity.enums.EventType;
+import ya.qwester345.events.dto.ConcertCreateDto;
 import ya.qwester345.events.dto.EventCreateDto;
+import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.api.IEventService;
+import ya.qwester345.events.service.utils.ConcertMapper;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,21 +28,8 @@ public class EventConcertService implements IEventService <EventConcert> {
     }
 
     @Override
-    public EventConcert add(EventCreateDto eventCreate) {
-        EventConcert event = new EventConcert();
-//        event.setDtEvent(eventCreate.getDtEvent());
-//        event.setCurrency(eventCreate.getCurrency());
-//        event.setDescription(eventCreate.getDescription());
-//        event.setStatus(eventCreate.getStatus());
-//        event.setTitle(eventCreate.getTitle());
-//        event.setType(eventCreate.getType());
-//        event.setDtEndOfSale(eventCreate.getDtEndOfSale());
-//        event.setDtCreate(LocalDateTime.now());
-//        event.setDtUpdate(event.getDtCreate());
-//        event.setUuid(UUID.randomUUID());
-//        this.dao.save(event);
-
-
+    public EventConcert add(EventDtoFactory eventCreate) {
+        EventConcert event = new ConcertMapper().concertFromDto(eventCreate);
         return event;
     }
 
@@ -49,12 +40,17 @@ public class EventConcertService implements IEventService <EventConcert> {
 
     @Override
     public EventConcert getByUuid(UUID uuid) {
-//        return dao.findEventConcertByUuid(uuid);
-        return null;
+        return dao.findById(uuid).orElseThrow();
+
     }
 
     @Override
-    public void update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventCreateDto eventCreateDto) {
+    public void update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory eventCreateDto) {
+//        dao.save();
+
+        EventConcert event = new ConcertMapper().concertFromDto(eventCreateDto);
+        EventConcert concert = dao.findById(uuid).orElseThrow();
+        dao.save(event);
 
     }
 }

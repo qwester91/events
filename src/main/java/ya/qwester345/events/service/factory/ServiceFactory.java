@@ -1,4 +1,4 @@
-package ya.qwester345.events.service;
+package ya.qwester345.events.service.factory;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -9,7 +9,9 @@ import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventConcert;
 import ya.qwester345.events.dao.entity.EventFilm;
 import ya.qwester345.events.dao.entity.enums.EventType;
+import ya.qwester345.events.dto.ConcertCreateDto;
 import ya.qwester345.events.dto.EventCreateDto;
+import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.api.IEventService;
 import ya.qwester345.events.service.api.IFactory;
 
@@ -29,7 +31,7 @@ public class ServiceFactory implements IFactory {
     }
 
     @Override
-    public Event add(EventType type, EventCreateDto eventCreateDto) {
+    public Event add(EventType type, EventDtoFactory eventCreateDto) {
         Event add = null;
         if(type == EventType.CONCERTS) {
             add = eventConcertService.add(eventCreateDto);
@@ -63,7 +65,7 @@ public class ServiceFactory implements IFactory {
     }
 
     @Override
-    public void update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventCreateDto eventCreateDto) {
+    public void update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory eventCreateDto) {
         if(type == EventType.CONCERTS) {
            eventConcertService.update(type, uuid, lastKnowDtUpdate, eventCreateDto);
         }else if(type == EventType.FILMS){

@@ -10,6 +10,7 @@ import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventFilm;
 import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.EventCreateDto;
+import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.api.IEventService;
 
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ public class EventFilmService implements IEventService<EventFilm> {
     }
 
     @Override
-    public EventFilm add(EventCreateDto eventCreate) {
+    public EventFilm add(EventDtoFactory eventCreate) {
         return null;
     }
 
@@ -40,7 +41,7 @@ public class EventFilmService implements IEventService<EventFilm> {
     }
 
     @Override
-    public void update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventCreateDto eventCreateDto) {
+    public void update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory eventCreateDto) {
 
     }
 }

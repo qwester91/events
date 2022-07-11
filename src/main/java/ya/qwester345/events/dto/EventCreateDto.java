@@ -3,6 +3,7 @@ package ya.qwester345.events.dto;
 import ya.qwester345.events.dao.entity.enums.EventStatus;
 import ya.qwester345.events.dao.entity.enums.EventType;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,34 +16,17 @@ public class EventCreateDto {
     private EventStatus status;
     private UUID currency;
 
+
     public EventCreateDto() {
     }
 
-    public void setTitle(String title) {
+    public EventCreateDto(String title, String description, LocalDateTime dtEvent, LocalDateTime dtEndOfSale, EventType type, EventStatus status, UUID currency) {
         this.title = title;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setDtEvent(LocalDateTime dtEvent) {
         this.dtEvent = dtEvent;
-    }
-
-    public void setDtEndOfSale(LocalDateTime dtEndOfSale) {
         this.dtEndOfSale = dtEndOfSale;
-    }
-
-    public void setType(EventType type) {
         this.type = type;
-    }
-
-    public void setStatus(EventStatus status) {
         this.status = status;
-    }
-
-    public void setCurrency(UUID currency) {
         this.currency = currency;
     }
 
@@ -50,27 +34,57 @@ public class EventCreateDto {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDateTime getDtEvent() {
         return dtEvent;
     }
 
+    public void setDtEvent(LocalDateTime dtEvent) {
+        this.dtEvent = dtEvent;
+    }
+
     public LocalDateTime getDtEndOfSale() {
         return dtEndOfSale;
+    }
+
+    public void setDtEndOfSale(LocalDateTime dtEndOfSale) {
+        this.dtEndOfSale = dtEndOfSale;
     }
 
     public EventType getType() {
         return type;
     }
 
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
     public EventStatus getStatus() {
         return status;
+    }
+
+    public void setStatus(EventStatus status) {
+        this.status = status;
     }
 
     public UUID getCurrency() {
         return currency;
     }
+
+    public void setCurrency(UUID currency) {
+        this.currency = currency;
+    }
+
+
 }

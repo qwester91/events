@@ -1,7 +1,11 @@
 package ya.qwester345.events.dto;
 
+import ya.qwester345.events.dao.entity.enums.EventStatus;
+import ya.qwester345.events.dao.entity.enums.EventType;
+
 import javax.persistence.Column;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class FilmCreateDto extends EventCreateDto{
@@ -11,7 +15,11 @@ public class FilmCreateDto extends EventCreateDto{
     private LocalDate releaseDate;
     private Integer duration;
 
-    public FilmCreateDto(UUID country, Integer releaseYear, LocalDate releaseDate, Integer duration) {
+    public FilmCreateDto(String title, String description, LocalDateTime dtEvent,
+                         LocalDateTime dtEndOfSale, EventType type, EventStatus status,
+                         UUID currency, UUID country, Integer releaseYear,
+                         LocalDate releaseDate, Integer duration) {
+        super(title, description, dtEvent, dtEndOfSale, type, status, currency);
         this.country = country;
         this.releaseYear = releaseYear;
         this.releaseDate = releaseDate;
