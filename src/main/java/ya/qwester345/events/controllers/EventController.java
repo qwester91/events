@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ya.qwester345.events.dao.entity.Event;
+import ya.qwester345.events.dao.entity.enums.EventStatus;
 import ya.qwester345.events.dao.entity.enums.EventType;
+import ya.qwester345.events.dto.EventCreateDto;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.api.IFactory;
 
@@ -27,6 +29,16 @@ public class EventController {
 
     @PostMapping("/{type}")
     public ResponseEntity<Event> addEvent(@PathVariable(name = "type") String type ,@RequestBody EventDtoFactory eventCreate){
+        EventDtoFactory concert = new EventDtoFactory();
+
+        concert.setType(EventType.CONCERTS);
+        concert.setTitle("Sting");
+        concert.setDtEvent(LocalDateTime.now());
+        concert.setStatus(EventStatus.PUBLISHED);
+        concert.setDescription("songs");
+        concert.setCurrency(UUID.randomUUID());
+        concert.setCategory(UUID.randomUUID());
+        concert.setDtEndOfSale(LocalDateTime.now());
         return new ResponseEntity<>(this.factory.add(EventType.valueOf(type), eventCreate), HttpStatus.CREATED);
 
     }
@@ -36,7 +48,8 @@ public class EventController {
     @GetMapping("/{type}")
     public Page<Event> getEventsByType(@PathVariable String type, @RequestParam(value = "page", defaultValue = "1") Integer page,
                                 @RequestParam(value = "size", defaultValue = "10") Integer size){
-        Pageable pageable = PageRequest.of(page, size);
+
+        Pageable pageable = PageRequest.of(page-1, size);
 
         return factory.getByType(EventType.valueOf(type), pageable);
 
@@ -44,6 +57,21 @@ public class EventController {
     @GetMapping("/{type}/{uuid}")
     public Event getEventsByUuid(@PathVariable(name = "type")String type,@PathVariable UUID uuid){
         return factory.getByUuid(EventType.valueOf(type),uuid);
+    }
+    @GetMapping("/test")
+    public EventCreateDto getEventsByUuid(){
+        EventDtoFactory concert = new EventDtoFactory();
+
+        concert.setType(EventType.CONCERTS);
+        concert.setTitle("Sting");
+        concert.setDtEvent(LocalDateTime.now());
+        concert.setStatus(EventStatus.PUBLISHED);
+        concert.setDescription("songs");
+        concert.setCurrency(UUID.randomUUID());
+        concert.setCategory(UUID.randomUUID());
+        concert.setDtEndOfSale(LocalDateTime.now());
+        return concert.getDto();
+
     }
 
     @PutMapping("{type}/{uuid}/dt_update/{dt_update}")

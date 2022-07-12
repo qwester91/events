@@ -4,6 +4,15 @@ spring:
     password: postgres
     url: jdbc:postgresql://localhost:5432/events?currentSchema=event
     driver-class-name: org.postgresql.Driver
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    sql-format: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 server:
   port: 80

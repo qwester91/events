@@ -30,6 +30,7 @@ public class EventConcertService implements IEventService <EventConcert> {
     @Override
     public EventConcert add(EventDtoFactory eventCreate) {
         EventConcert event = new ConcertMapper().concertFromDto(eventCreate);
+        dao.save(event);
         return event;
     }
 

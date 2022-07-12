@@ -34,7 +34,7 @@ public class Event {
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
-    @Column
+    @Column(name = "dt_create")
     public LocalDateTime getDtCreate() {
         return dtCreate;
     }
@@ -42,7 +42,8 @@ public class Event {
     public void setDtCreate(LocalDateTime dtCreate) {
         this.dtCreate = dtCreate;
     }
-
+    @Version
+    @Column(name = "dt_update")
     public LocalDateTime getDtUpdate() {
         return dtUpdate;
     }
@@ -50,7 +51,7 @@ public class Event {
     public void setDtUpdate(LocalDateTime dtUpdate) {
         this.dtUpdate = dtUpdate;
     }
-
+    @Column (name = "title")
     public String getTitle() {
         return title;
     }
@@ -58,7 +59,7 @@ public class Event {
     public void setTitle(String title) {
         this.title = title;
     }
-
+@Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -66,7 +67,7 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
-
+@Column(name = "dt_event")
     public LocalDateTime getDtEvent() {
         return dtEvent;
     }
@@ -74,7 +75,7 @@ public class Event {
     public void setDtEvent(LocalDateTime dtEvent) {
         this.dtEvent = dtEvent;
     }
-
+@Column(name = "dt_end_of_sale")
     public LocalDateTime getDtEndOfSale() {
         return dtEndOfSale;
     }
@@ -82,7 +83,7 @@ public class Event {
     public void setDtEndOfSale(LocalDateTime dtEndOfSale) {
         this.dtEndOfSale = dtEndOfSale;
     }
-    @Column
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
     public EventType getType() {
         return type;
@@ -91,6 +92,7 @@ public class Event {
     public void setType(EventType type) {
         this.type = type;
     }
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     public EventStatus getStatus() {
         return status;
@@ -99,7 +101,7 @@ public class Event {
     public void setStatus(EventStatus status) {
         this.status = status;
     }
-
+@Column(name = "currency")
     public UUID getCurrency() {
         return currency;
     }

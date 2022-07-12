@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "event",schema = "events")
-@SecondaryTable(name = "concert",pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid_concert"),schema = "events")
+@Table(name = "events",schema = "event")
+@SecondaryTable(name = "concert",pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid"),schema = "event")
 
 public class EventConcert extends Event {
 

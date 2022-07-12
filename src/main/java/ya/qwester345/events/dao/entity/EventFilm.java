@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 @Entity
-@Table(name = "event",schema = "events")
-@SecondaryTable(name = "film",pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid_film"),schema = "events")
+@Table(name = "events",schema = "event")
+@SecondaryTable(name = "film",pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid"),schema = "event")
 
 public class EventFilm extends Event{
 
