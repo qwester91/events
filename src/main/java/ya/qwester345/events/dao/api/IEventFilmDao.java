@@ -15,7 +15,7 @@ import java.util.UUID;
 @Repository
 public interface IEventFilmDao extends JpaRepository<EventFilm, UUID> {
 
-    @Query
+
     Page<Event> findAllByType(EventType type, Pageable pageable);
 
 }

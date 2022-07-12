@@ -9,12 +9,12 @@ import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventConcert;
 import ya.qwester345.events.dao.entity.enums.EventType;
 
-import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface IEventConcertDao extends JpaRepository<EventConcert, UUID> {
 
-@Query
+
     Page<Event> findAllByType(EventType type, Pageable pageable);
+
 }

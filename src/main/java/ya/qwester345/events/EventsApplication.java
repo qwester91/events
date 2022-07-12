@@ -24,16 +24,7 @@ public class EventsApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(EventsApplication.class, args);
-        EventDtoFactory concert = new EventDtoFactory();
 
-        concert.setType(EventType.CONCERTS);
-        concert.setTitle("Sting");
-        concert.setDtEvent(LocalDateTime.now());
-        concert.setStatus(EventStatus.PUBLISHED);
-        concert.setDescription("songs");
-        concert.setCurrency(UUID.randomUUID());
-        concert.setCategory(UUID.randomUUID());
-       concert.setDtEndOfSale(LocalDateTime.now());
 
 
     }
