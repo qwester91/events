@@ -11,6 +11,7 @@ import ya.qwester345.events.dao.entity.EventFilm;
 import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.ConcertCreateDto;
 import ya.qwester345.events.dto.EventCreateDto;
+import ya.qwester345.events.dto.ListOfEvents;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.api.IEventService;
 import ya.qwester345.events.service.api.IFactory;
@@ -42,8 +43,8 @@ public class ServiceFactory implements IFactory {
     }
 
     @Override
-    public Page<Event> getByType(EventType type, Pageable pageable) {
-        Page<Event> eventPage = null;
+    public ListOfEvents<Event> getByType(EventType type, Pageable pageable) {
+        ListOfEvents<Event> eventPage = null;
         if(type == EventType.CONCERTS) {
             eventPage = eventConcertService.getByType(type,pageable);
         }else if(type == EventType.FILMS){

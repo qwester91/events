@@ -8,6 +8,7 @@ import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.enums.EventStatus;
 import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.EventCreateDto;
+import ya.qwester345.events.dto.ListOfEvents;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.api.IFactory;
 
@@ -46,8 +47,8 @@ public class EventController {
 
 
     @GetMapping("/{type}")
-    public Page<Event> getEventsByType(@PathVariable String type, @RequestParam(value = "page", defaultValue = "1") Integer page,
-                                @RequestParam(value = "size", defaultValue = "10") Integer size){
+    public ListOfEvents<Event> getEventsByType(@PathVariable String type, @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                               @RequestParam(value = "size", defaultValue = "10") Integer size){
 
         Pageable pageable = PageRequest.of(page-1, size);
 

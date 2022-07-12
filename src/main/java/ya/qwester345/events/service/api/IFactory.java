@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.EventCreateDto;
+import ya.qwester345.events.dto.ListOfEvents;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import java.util.UUID;
 public interface IFactory {
     Event add(EventType type, EventDtoFactory eventCreateDto);
 
-    Page<Event> getByType(EventType type, Pageable pageable);
+    ListOfEvents<Event> getByType(EventType type, Pageable pageable);
 
     Event getByUuid(EventType type, UUID uuid);
 

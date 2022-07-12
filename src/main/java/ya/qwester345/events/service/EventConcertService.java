@@ -8,14 +8,12 @@ import ya.qwester345.events.dao.api.IEventConcertDao;
 import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventConcert;
 import ya.qwester345.events.dao.entity.enums.EventType;
-import ya.qwester345.events.dto.ConcertCreateDto;
-import ya.qwester345.events.dto.EventCreateDto;
+import ya.qwester345.events.dto.ListOfEvents;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.api.IEventService;
-import ya.qwester345.events.service.utils.ConcertMapper;
+import ya.qwester345.events.service.utils.EventMapper;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -29,14 +27,14 @@ public class EventConcertService implements IEventService <EventConcert> {
 
     @Override
     public EventConcert add(EventDtoFactory eventCreate) {
-        EventConcert event = new ConcertMapper().concertFromDto(eventCreate);
+        EventConcert event = new EventMapper().concertFromDto(eventCreate);
         dao.save(event);
         return event;
     }
 
     @Override
-    public Page<Event> getByType(EventType type, Pageable pageable) {
-        return dao.findAllByType(type, pageable);
+    public ListOfEvents<Event> getByType(EventType type, Pageable pageable) {
+        return new ListOfEvents<>(dao.findAllByType(type, pageable));
     }
 
     @Override
@@ -46,12 +44,20 @@ public class EventConcertService implements IEventService <EventConcert> {
     }
 
     @Override
-    public void update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory eventCreateDto) {
+    public EventConcert update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory eventCreateDto) {
 //        dao.save();
 
-        EventConcert event = new ConcertMapper().concertFromDto(eventCreateDto);
         EventConcert concert = dao.findById(uuid).orElseThrow();
-        dao.save(event);
+        LocalDateTime dtCreate = concert.getDtCreate();
+        if (!concert.getDtUpdate().equals(lastKnowDtUpdate)){
+            throw new IllegalStateException("файл был изменен");
+        }else {
+            concert = new EventMapper().concertFromDto(eventCreateDto);
+            concert.setUuid(uuid);
+            concert.setDtCreate(dtCreate);
+        }
+        dao.save(concert);
+        return concert;
 
     }
 }
