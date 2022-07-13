@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public class ListOfCountries<T> {
+public class ListOfEntity<T> {
     private Integer number;
     private Integer size;
     private Integer totalPages;
@@ -15,7 +15,7 @@ public class ListOfCountries<T> {
     private List<T> content;
 
 
-    public ListOfCountries(Page<T> page) {
+    public ListOfEntity(Page<T> page) {
         this.number = page.getNumber();
         this.size = page.getSize();
         this.totalPages = page.getTotalPages();

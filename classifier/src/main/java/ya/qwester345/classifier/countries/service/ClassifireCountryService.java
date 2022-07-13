@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ya.qwester345.classifier.countries.dao.ICountryDao;
 import ya.qwester345.classifier.countries.dao.entity.Country;
-import ya.qwester345.classifier.countries.dto.ListOfCountries;
+import ya.qwester345.classifier.countries.dto.ListOfEntity;
 import ya.qwester345.classifier.countries.dto.api.IDto;
 import ya.qwester345.classifier.countries.service.api.IClassifierService;
 import ya.qwester345.classifier.countries.service.api.IMapper;
@@ -14,7 +14,9 @@ import ya.qwester345.classifier.countries.service.api.IMapper;
 @Service
 public class ClassifireCountryService implements IClassifierService<Country> {
     private ICountryDao dao;
+    @Qualifier("mapper")
     private IMapper<Country, IDto> mapper;
+    @Autowired
 
     public ClassifireCountryService(ICountryDao dao, IMapper<Country, IDto> mapper) {
         this.dao = dao;
@@ -29,7 +31,7 @@ public class ClassifireCountryService implements IClassifierService<Country> {
     }
 
     @Override
-    public ListOfCountries<Country> get(Pageable pageable) {
-        return new ListOfCountries<Country>(dao.findAll(pageable));
+    public ListOfEntity<Country> get(Pageable pageable) {
+        return new ListOfEntity<Country>(dao.findAll(pageable));
     }
 }
