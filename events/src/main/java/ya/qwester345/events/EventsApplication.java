@@ -16,10 +16,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @SpringBootApplication
-@EnableJpaRepositories(
-        basePackageClasses = {
-                IEventConcertDao.class, IEventConcertDao.class
-        })
+@EnableJpaRepositories
 public class EventsApplication {
 
     public static void main(String[] args) {

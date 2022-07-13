@@ -1,4 +1,4 @@
-package ya.qwester345.events.config;
+package ya.qwester345.classifier.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -7,8 +7,9 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import ya.qwester345.events.controllers.utils.LocalDateTimeDeserializer;
-import ya.qwester345.events.controllers.utils.LocalDateTimeSerializer;
+import ya.qwester345.classifier.config.utils.LocalDateTimeDeserializer;
+import ya.qwester345.classifier.config.utils.LocalDateTimeSerializer;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

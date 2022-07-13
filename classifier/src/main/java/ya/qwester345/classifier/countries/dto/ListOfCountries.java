@@ -1,10 +1,10 @@
-package ya.qwester345.events.dto;
+package ya.qwester345.classifier.countries.dto;
 
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public class ListOfEvents <T> {
+public class ListOfCountries<T> {
     private Integer number;
     private Integer size;
     private Integer totalPages;
@@ -15,7 +15,7 @@ public class ListOfEvents <T> {
     private List<T> content;
 
 
-    public ListOfEvents(Page<T> page) {
+    public ListOfCountries(Page<T> page) {
         this.number = page.getNumber();
         this.size = page.getSize();
         this.totalPages = page.getTotalPages();

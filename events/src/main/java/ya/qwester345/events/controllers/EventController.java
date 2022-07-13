@@ -30,16 +30,7 @@ public class EventController {
 
     @PostMapping("/{type}")
     public ResponseEntity<Event> addEvent(@PathVariable(name = "type") String type ,@RequestBody EventDtoFactory eventCreate){
-        EventDtoFactory concert = new EventDtoFactory();
 
-        concert.setType(EventType.CONCERTS);
-        concert.setTitle("Sting");
-        concert.setDtEvent(LocalDateTime.now());
-        concert.setStatus(EventStatus.PUBLISHED);
-        concert.setDescription("songs");
-        concert.setCurrency(UUID.randomUUID());
-        concert.setCategory(UUID.randomUUID());
-        concert.setDtEndOfSale(LocalDateTime.now());
         return new ResponseEntity<>(this.factory.add(EventType.valueOf(type), eventCreate), HttpStatus.CREATED);
 
     }
