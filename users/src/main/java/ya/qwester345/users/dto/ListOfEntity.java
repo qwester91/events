@@ -1,7 +1,9 @@
 package ya.qwester345.users.dto;
 
 import org.springframework.data.domain.Page;
+import ya.qwester345.users.dao.entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListOfEntity<T> {
@@ -24,6 +26,9 @@ public class ListOfEntity<T> {
         this.numberOfElements = page.getNumberOfElements();
         this.last = page.isLast();
         this.content = page.getContent();
+    }
+
+    public ListOfEntity() {
     }
 
     public Integer getNumber() {
@@ -89,4 +94,5 @@ public class ListOfEntity<T> {
     public void setContent(List<T> content) {
         this.content = content;
     }
-}
+
+  }

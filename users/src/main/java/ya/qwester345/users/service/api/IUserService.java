@@ -4,14 +4,18 @@ import org.springframework.data.domain.Pageable;
 import ya.qwester345.users.dao.entity.User;
 import ya.qwester345.users.dto.ListOfEntity;
 import ya.qwester345.users.dto.UserCreateDto;
+import ya.qwester345.users.dto.UserReadDto;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface IUserService {
     User create(UserCreateDto dto);
 
-    ListOfEntity<User> getListOfUsers(Pageable pageable);
+    ListOfEntity<UserReadDto> getListOfUsers(Pageable pageable);
 
-    User getUser(UUID uuid);
+    UserReadDto getUser(UUID uuid);
 
+    void update(UUID uuid, LocalDateTime lastKnowDtUpdate, UserCreateDto userCreateDto);
 }
+

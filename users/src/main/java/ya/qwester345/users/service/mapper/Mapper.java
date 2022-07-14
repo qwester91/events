@@ -1,10 +1,15 @@
 package ya.qwester345.users.service.mapper;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import ya.qwester345.users.dao.entity.User;
+import ya.qwester345.users.dto.ListOfEntity;
 import ya.qwester345.users.dto.UserCreateDto;
+import ya.qwester345.users.dto.UserReadDto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 @Component
 public class Mapper {
@@ -19,5 +24,34 @@ public class Mapper {
         user.setStatus(dto.getStatus());
         user.setRole(dto.getRole());
         return user;
+    }
+
+    public ListOfEntity<UserReadDto> getReadDtoFromEntity(ListOfEntity<User> all) {
+        UserReadDto dto = new UserReadDto();
+        List<UserReadDto> readList = new ArrayList<>();
+        ListOfEntity<UserReadDto> newList = new ListOfEntity<>();
+        for (User user : all.getContent()) {
+            readList.add(getUserReadDto(user));
+        }
+        newList.setContent(readList);
+        newList.setFirst(all.getFirst());
+        newList.setLast(all.getLast());
+        newList.setNumber(all.getNumber());
+        newList.setSize(all.getSize());
+        newList.setTotalElements(all.getTotalElements());
+        newList.setNumberOfElements(all.getNumberOfElements());
+        newList.setTotalPages(all.getTotalPages());
+        return newList;
+    }
+    public UserReadDto getUserReadDto(User user){
+        UserReadDto dto = new UserReadDto();
+        dto.setDtCreate(user.getDtCreate());
+        dto.setDtUpdate(user.getDtUpdate());
+        dto.setEmail(user.getEmail());
+        dto.setUuid(user.getUuid());
+        dto.setNick(user.getNick());
+        dto.setRole(user.getRole());
+        dto.setStatus(user.getStatus());
+        return dto;
     }
 }
