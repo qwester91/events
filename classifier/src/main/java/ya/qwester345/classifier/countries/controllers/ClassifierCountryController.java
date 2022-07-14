@@ -13,9 +13,9 @@ import ya.qwester345.classifier.countries.service.api.IClassifierService;
 @RestController
 @RequestMapping("/api/v1/classifier/country")
 public class ClassifierCountryController {
-    private IClassifierService<Country> service;
+    private IClassifierService<Country, CountryDto> service;
 
-    public ClassifierCountryController(IClassifierService<Country> service) {
+    public ClassifierCountryController(IClassifierService<Country,CountryDto> service) {
         this.service = service;
     }
 

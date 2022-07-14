@@ -2,17 +2,8 @@ package ya.qwester345.classifier.countries.dto;
 
 import ya.qwester345.classifier.countries.dto.api.IDto;
 
-public class CountryDto {
-    private String description;
+public class CategoryDto {
     private String title;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getTitle() {
         return title;
