@@ -1,9 +1,7 @@
 package ya.qwester345.users.dto;
 
 import org.springframework.data.domain.Page;
-import ya.qwester345.users.dao.entity.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListOfEntity<T> {

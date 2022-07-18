@@ -4,8 +4,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.*;
-import ya.qwester345.users.dao.entity.User;
+import ya.qwester345.users.dao.entity.UserEntity;
 import ya.qwester345.users.dto.ListOfEntity;
 import ya.qwester345.users.dto.UserCreateDto;
 import ya.qwester345.users.dto.UserReadDto;
@@ -20,8 +22,16 @@ import java.util.UUID;
 @RequestMapping("/api/v1/users")
 public class UserController {
     private IUserService userService;
+    private final UserDetailsManager userManager;
+    private final PasswordEncoder encoder;
+
+    public UserController(UserDetailsManager userManager,
+                            PasswordEncoder encoder) {
+        this.userManager = userManager;
+        this.encoder = encoder;
+    }
     @PostMapping
-    public ResponseEntity<User> createNewUser(@RequestBody UserCreateDto dto){
+    public ResponseEntity<UserEntity> createNewUser(@RequestBody UserCreateDto dto){
         return new ResponseEntity<>(userService.create(dto), HttpStatus.CREATED);
     }
     @GetMapping
