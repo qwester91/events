@@ -1,15 +1,14 @@
 package ya.qwester345.users.controllers;
 
+import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ya.qwester345.users.config.utils.JwtTokenUtil;
 import ya.qwester345.users.dao.entity.UserEntity;
 import ya.qwester345.users.dto.LoginDto;
 import ya.qwester345.users.dto.RegistrationDto;
+import ya.qwester345.users.dto.UserReadDto;
 import ya.qwester345.users.service.UserService;
 import ya.qwester345.users.service.mapper.Mapper;
 
@@ -44,6 +43,12 @@ public class UserLoginController {
         }
 
         return JwtTokenUtil.generateAccessToken(user);
+    }
+
+    @GetMapping("/me")
+    public UserReadDto getMe(){
+        userService.loadUserByUsername()
+
     }
 
 
