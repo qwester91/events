@@ -3,6 +3,8 @@ package ya.qwester345.users.dao.entity;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "auth_granted_authority")
@@ -14,9 +16,11 @@ public class AuthGrantedAuthority implements GrantedAuthority {
 
     private String authority;
 
-    @ManyToOne
-    @JoinColumn(name = "auth_user_detail_id")
-    private UserEntity user;
+    @ManyToMany(mappedBy = "authorities")
+    private List<UserEntity> userEntity;
+
+    public AuthGrantedAuthority() {
+    }
 
     @Override
     public String getAuthority() {
@@ -35,11 +39,11 @@ public class AuthGrantedAuthority implements GrantedAuthority {
         this.authority = authority;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public List<UserEntity> getUserEntity() {
+        return userEntity;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUserEntity(List<UserEntity> userEntity) {
+        this.userEntity = userEntity;
     }
 }

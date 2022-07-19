@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.UUID;
 @Component
 public class Mapper {
+    public Mapper() {
+    }
+
     public UserEntity getUserFromCreateDto(UserCreateDto dto) {
         UserEntity user = new UserEntity();
         user.setUuid(UUID.randomUUID());

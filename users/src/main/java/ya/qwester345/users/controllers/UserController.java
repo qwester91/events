@@ -11,7 +11,9 @@ import ya.qwester345.users.dao.entity.UserEntity;
 import ya.qwester345.users.dto.ListOfEntity;
 import ya.qwester345.users.dto.UserCreateDto;
 import ya.qwester345.users.dto.UserReadDto;
+import ya.qwester345.users.service.UserService;
 import ya.qwester345.users.service.api.IUserService;
+import ya.qwester345.users.service.mapper.Mapper;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -21,18 +23,21 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
-    private IUserService userService;
-    private final UserDetailsManager userManager;
+    private final UserService userService;
     private final PasswordEncoder encoder;
+    private final Mapper mapper;
 
-    public UserController(UserDetailsManager userManager,
-                            PasswordEncoder encoder) {
-        this.userManager = userManager;
+    public UserController(UserService userService, PasswordEncoder encoder, Mapper mapper) {
+        this.userService = userService;
         this.encoder = encoder;
+        this.mapper = mapper;
     }
+
     @PostMapping
     public ResponseEntity<UserEntity> createNewUser(@RequestBody UserCreateDto dto){
-        return new ResponseEntity<>(userService.create(dto), HttpStatus.CREATED);
+        UserEntity userFromCreateDto = mapper.getUserFromCreateDto(dto);
+        userService.createUser(userFromCreateDto);
+        return new ResponseEntity<>(userFromCreateDto, HttpStatus.CREATED);
     }
     @GetMapping
     public ListOfEntity<UserReadDto> getListOfUsers(@RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -51,7 +56,7 @@ public class UserController {
                             @PathVariable(name = "dt_update") Long dtUpdate,
                             @RequestBody UserCreateDto userCreateDto){
         LocalDateTime lastKnowDtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
-        this.userService.update( uuid, lastKnowDtUpdate, userCreateDto);
+        this.userService.updateUser(mapper.getUserFromCreateDto(userCreateDto));
     }
 
     

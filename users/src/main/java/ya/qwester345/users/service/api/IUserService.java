@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface IUserService {
-    UserEntity create(UserCreateDto dto);
 
     ListOfEntity<UserReadDto> getListOfUsers(Pageable pageable);
 

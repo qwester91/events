@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ya.qwester345.users.config.utils.JwtTokenUtil;
+import ya.qwester345.users.service.UserService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,9 +24,9 @@ import static org.apache.logging.log4j.util.Strings.isEmpty;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final UserDetailsManager userManager;
+    private final UserService userManager;
 
-    public JwtFilter(UserDetailsManager userManager) {
+    public JwtFilter(UserService userManager) {
         this.userManager = userManager;
     }
 

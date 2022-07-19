@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
+import ya.qwester345.users.dao.IAuthorityDao;
 import ya.qwester345.users.dao.IUserDao;
 import ya.qwester345.users.dao.entity.AuthGrantedAuthority;
 import ya.qwester345.users.dao.entity.UserEntity;
@@ -27,32 +28,34 @@ public class UsersStorageConfig {
         return new BCryptPasswordEncoder();
     }
 
-
-    public UserDetailsManager userDetailsManager(IUserDao dao, Mapper mapper, PasswordEncoder encoder) {
-       UserDetailsManager manager = new UserService( dao, mapper);
-
-        try{
-            UserEntity user = new UserEntity() ;
-            user.setPassword("123");
-            Set<AuthGrantedAuthority> authGrantedAuthoritySet = new HashSet<>();
-            AuthGrantedAuthority authGrantedAuthority = new AuthGrantedAuthority();
-            authGrantedAuthority.setAuthority(Role.USER.name());
-
-            authGrantedAuthoritySet.add(authGrantedAuthority);
-
-            user.setAuthorities(authGrantedAuthoritySet);
-            UserDetails admin = User.builder()
-                    .username("admin")
-                    .password(encoder.encode("321"))
-                    .roles(Role.USER.name(),Role.ADMIN.name())
-                    .build();
-
-            manager.createUser(user);
-            manager.createUser(admin);
-        }catch (DuplicateKeyException e){
-            //всё ок, уже есть
-        }
-
-        return manager;
-    }
+//    @Bean
+//    public UserService userDetailsManager(IAuthorityDao authorityDao, IUserDao dao, Mapper mapper, PasswordEncoder encoder) {
+//       UserService manager = new UserService( dao, mapper);
+//       AuthGrantedAuthority authGrantedAuthority = new AuthGrantedAuthority();
+//        authGrantedAuthority.setAuthority(Role.USER.name());
+//       authorityDao.save(authGrantedAuthority);
+//
+//        try{
+//            UserEntity user = new UserEntity() ;
+//            user.setPassword("123");
+//            Set<AuthGrantedAuthority> authGrantedAuthoritySet = new HashSet<>();
+//
+//
+//            authGrantedAuthoritySet.add(authGrantedAuthority);
+//
+//            user.setAuthorities(authGrantedAuthoritySet);
+//            UserDetails admin = User.builder()
+//                    .username("admin")
+//                    .password(encoder.encode("321"))
+//                    .roles(Role.USER.name(),Role.ADMIN.name())
+//                    .build();
+//
+//            manager.createUser(user);
+//            manager.createUser(admin);
+//        }catch (DuplicateKeyException e){
+//            //всё ок, уже есть
+//        }
+//
+//        return manager;
+//    }
 }
