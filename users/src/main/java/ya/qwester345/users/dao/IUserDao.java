@@ -12,5 +12,5 @@ import java.util.UUID;
 public interface IUserDao extends JpaRepository<UserEntity,UUID> {
 
     Page<UserEntity> findAll(Pageable pageable);
-
+    UserEntity findUserEntitiesByEmail(String username);
 }

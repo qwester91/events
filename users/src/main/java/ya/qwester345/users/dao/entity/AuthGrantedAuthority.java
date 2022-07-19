@@ -16,8 +16,6 @@ public class AuthGrantedAuthority implements GrantedAuthority {
 
     private String authority;
 
-    @ManyToMany(mappedBy = "authorities")
-    private List<UserEntity> userEntity;
 
     public AuthGrantedAuthority() {
     }
@@ -38,12 +36,5 @@ public class AuthGrantedAuthority implements GrantedAuthority {
     public void setAuthority(String authority) {
         this.authority = authority;
     }
-
-    public List<UserEntity> getUserEntity() {
-        return userEntity;
-    }
-
-    public void setUserEntity(List<UserEntity> userEntity) {
-        this.userEntity = userEntity;
-    }
 }
+

@@ -56,7 +56,7 @@ public class UserController {
                             @PathVariable(name = "dt_update") Long dtUpdate,
                             @RequestBody UserCreateDto userCreateDto){
         LocalDateTime lastKnowDtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
-        this.userService.updateUser(mapper.getUserFromCreateDto(userCreateDto));
+        this.userService.update(uuid, lastKnowDtUpdate, userCreateDto);
     }
 
     
