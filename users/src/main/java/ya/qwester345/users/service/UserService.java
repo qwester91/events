@@ -2,6 +2,7 @@ package ya.qwester345.users.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -19,7 +20,7 @@ import ya.qwester345.users.service.mapper.Mapper;
 import java.time.LocalDateTime;
 import java.util.UUID;
 @Service
-@Transactional(readOnly = true)
+
 public class UserService implements UserDetailsManager , IUserService {
 
     private final IUserDao dao;
@@ -36,7 +37,7 @@ public class UserService implements UserDetailsManager , IUserService {
 
     @Override
     public void createUser(UserDetails user) {
-        dao.save((UserEntity) user);
+        dao.saveAndFlush((UserEntity) user);
 
     }
 
@@ -61,8 +62,8 @@ public class UserService implements UserDetailsManager , IUserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
     public ListOfEntity<UserReadDto> getListOfUsers(Pageable pageable) {
         ListOfEntity<UserEntity> userListOfEntity = new ListOfEntity<>(dao.findAll(pageable));
@@ -72,6 +73,12 @@ public class UserService implements UserDetailsManager , IUserService {
     public UserReadDto getUser(UUID uuid) {
         return mapper.getUserReadDto(dao.findById(uuid).orElseThrow());
     }
+
+    public UserReadDto getUser() {
+        return mapper.getUserReadDto((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    }
+
+
 
     @Override
     public void update(UUID uuid, LocalDateTime lastKnowDtUpdate, UserCreateDto userCreateDto) {

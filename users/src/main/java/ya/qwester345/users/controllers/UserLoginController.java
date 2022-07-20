@@ -27,7 +27,7 @@ public class UserLoginController {
     }
 
     @PostMapping("/registration")
-    public void register(RegistrationDto dto){
+    public void register(@RequestBody RegistrationDto dto){
         UserEntity user = mapper.getUserFromRegistrationDto(dto);
         userService.createUser(user);
 
@@ -46,8 +46,10 @@ public class UserLoginController {
     }
 
     @GetMapping("/me")
-    public UserReadDto getMe(){
-        userService.loadUserByUsername()
+    public UserReadDto getMe(@RequestHeader (name = "Authorization") String token){
+
+
+      return userService.getUser();
 
     }
 

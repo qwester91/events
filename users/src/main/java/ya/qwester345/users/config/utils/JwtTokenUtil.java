@@ -2,6 +2,7 @@ package ya.qwester345.users.config.utils;
 
 import io.jsonwebtoken.*;
 import org.springframework.security.core.userdetails.UserDetails;
+import ya.qwester345.users.dao.entity.UserEntity;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -12,8 +13,8 @@ public class JwtTokenUtil {
     private static final String jwtIssuer = "ITAcademy";
 
 
-    public static String generateAccessToken(UserDetails user) {
-        return generateAccessToken(user.getUsername());
+    public static String generateAccessToken(UserEntity user) {
+        return generateAccessToken(user.getEmail());
     }
 
     public static String generateAccessToken(String name) {
@@ -26,7 +27,7 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-    public static String getUsername(String token) {
+    public static String getEmail(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
