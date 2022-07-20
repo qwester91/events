@@ -5,6 +5,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ya.qwester345.users.dao.entity.enums.Role;
 import ya.qwester345.users.filter.JwtFilter;
 
 import javax.servlet.http.HttpServletResponse;
@@ -45,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Our public endpoints
-                .antMatchers("/api/v1/users").permitAll()                // Our private endpoints
+                .antMatchers("/api/v1/users/me").authenticated()
+                .antMatchers("/api/v1/users").hasRole("ADMIN")
                 .anyRequest().permitAll();
 
 

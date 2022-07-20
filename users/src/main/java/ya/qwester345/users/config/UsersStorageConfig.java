@@ -29,13 +29,13 @@ public class UsersStorageConfig {
     }
 
 //    @Bean
-//    public UserService userDetailsManager(IAuthorityDao authorityDao, IUserDao dao, Mapper mapper, PasswordEncoder encoder) {
-//       UserService manager = new UserService( dao, mapper);
+//    public UserService userService(IAuthorityDao authorityDao, IUserDao dao, Mapper mapper) {
+//       UserService manager = new UserService( dao,authorityDao, mapper);
 //       AuthGrantedAuthority authGrantedAuthority = new AuthGrantedAuthority();
 //        authGrantedAuthority.setAuthority(Role.USER.name());
 //       authorityDao.save(authGrantedAuthority);
 //
-//        try{
+////        try{
 //            UserEntity user = new UserEntity() ;
 //            user.setPassword("123");
 //            Set<AuthGrantedAuthority> authGrantedAuthoritySet = new HashSet<>();

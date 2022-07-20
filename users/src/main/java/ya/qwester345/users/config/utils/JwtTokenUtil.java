@@ -14,12 +14,13 @@ public class JwtTokenUtil {
 
 
     public static String generateAccessToken(UserEntity user) {
-        return generateAccessToken(user.getEmail());
+        return generateAccessToken(user.getEmail(), user.getRole().name());
     }
 
-    public static String generateAccessToken(String name) {
+    public static String generateAccessToken(String name, String role) {
         return Jwts.builder()
                 .setSubject(name)
+                .setSubject(role)
                 .setIssuer(jwtIssuer)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(7))) // 1 week

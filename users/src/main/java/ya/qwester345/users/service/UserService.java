@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ya.qwester345.users.dao.IAuthorityDao;
 import ya.qwester345.users.dao.IUserDao;
 import ya.qwester345.users.dao.entity.UserEntity;
+import ya.qwester345.users.dao.entity.enums.Role;
+import ya.qwester345.users.dao.entity.enums.Status;
 import ya.qwester345.users.dto.ListOfEntity;
 import ya.qwester345.users.dto.UserCreateDto;
 import ya.qwester345.users.dto.UserReadDto;
@@ -31,6 +33,14 @@ public class UserService implements UserDetailsManager , IUserService {
         this.dao = dao;
         this.authorityDao = authorityDao;
         this.mapper = mapper;
+    UserCreateDto userCreateDto = new UserCreateDto();
+    userCreateDto.setEmail("admin@admin.ru");
+    userCreateDto.setNick("admin");
+    userCreateDto.setPassword("123");
+    userCreateDto.setRole(Role.ADMIN);
+    userCreateDto.setStatus(Status.ACTIVATED);
+
+    this.createUser(mapper.getUserFromCreateDto(userCreateDto));
     }
 
 
