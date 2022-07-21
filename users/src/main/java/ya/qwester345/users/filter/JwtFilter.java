@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ya.qwester345.users.config.utils.JwtTokenUtil;
+import ya.qwester345.users.dao.entity.UserEntity;
 import ya.qwester345.users.service.UserService;
 
 import javax.servlet.FilterChain;
@@ -50,7 +51,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         // Get user identity and set it on the spring security context
-        UserDetails userDetails = userManager
+        UserEntity userDetails = userManager
                 .findUserEntitiesByEmail(JwtTokenUtil.getEmail(token));
 
         UsernamePasswordAuthenticationToken

@@ -7,7 +7,6 @@ import ya.qwester345.users.dao.entity.enums.Status;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 @Entity
 @Table(name = "users_table")
@@ -36,8 +35,8 @@ public class UserEntity implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "user_service_schema", name = "users_roles",
             joinColumns = { @JoinColumn(name = "user_mail", referencedColumnName = "email")},
-            inverseJoinColumns = { @JoinColumn(name = "role_name", referencedColumnName = "authority")})
-    private Set<AuthGrantedAuthority> authorities;
+            inverseJoinColumns = { @JoinColumn(name = "role_name", referencedColumnName = "name")})
+    private List<Name> authorities;
 
     public UserEntity() {
     }
@@ -50,7 +49,7 @@ public class UserEntity implements UserDetails {
 
     @Override
 
-    public Set<AuthGrantedAuthority> getAuthorities() {
+    public List<Name> getAuthorities() {
         return authorities;
     }
 
@@ -112,7 +111,7 @@ public class UserEntity implements UserDetails {
         this.role = role;
     }
 
-    public void setAuthorities(Set<AuthGrantedAuthority> authorities) {
+    public void setAuthorities(List<Name> authorities) {
         this.authorities = authorities;
     }
 

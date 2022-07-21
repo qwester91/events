@@ -1,6 +1,7 @@
 package ya.qwester345.users.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,19 +29,19 @@ public class UserService implements UserDetailsManager , IUserService {
     private final IUserDao dao;
     private final IAuthorityDao authorityDao;
     private final Mapper mapper;
-@Autowired
+
     public UserService(IUserDao dao, IAuthorityDao authorityDao, Mapper mapper) {
         this.dao = dao;
         this.authorityDao = authorityDao;
         this.mapper = mapper;
-    UserCreateDto userCreateDto = new UserCreateDto();
-    userCreateDto.setEmail("admin@admin.ru");
-    userCreateDto.setNick("admin");
-    userCreateDto.setPassword("123");
-    userCreateDto.setRole(Role.ADMIN);
-    userCreateDto.setStatus(Status.ACTIVATED);
-
-    this.createUser(mapper.getUserFromCreateDto(userCreateDto));
+//    UserCreateDto userCreateDto = new UserCreateDto();
+//    userCreateDto.setEmail("admin@admin.ru");
+//    userCreateDto.setNick("admin");
+//    userCreateDto.setPassword("123");
+//    userCreateDto.setRole(Role.ADMIN);
+//    userCreateDto.setStatus(Status.ACTIVATED);
+//
+//    this.createUser(mapper.getUserFromCreateDto(userCreateDto));
     }
 
 
