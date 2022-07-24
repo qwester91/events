@@ -7,10 +7,13 @@ import ya.qwester345.events.dao.api.IEventConcertDao;
 import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventConcert;
 import ya.qwester345.events.dao.entity.enums.EventType;
+import ya.qwester345.events.dto.ConcertCreateDto;
+import ya.qwester345.events.dto.EventCreateDto;
 import ya.qwester345.events.dto.ListOfEvents;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.api.IEventService;
 import ya.qwester345.events.service.utils.EventMapper;
+import ya.qwester345.events.service.utils.Validator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -19,14 +22,18 @@ import java.util.UUID;
 @Qualifier("EventConcertService")
 public class EventConcertService implements IEventService <EventConcert> {
     private final IEventConcertDao dao;
+    private final Validator validator;
 
-    public EventConcertService(IEventConcertDao dao) {
+    public EventConcertService(IEventConcertDao dao, Validator validator) {
         this.dao = dao;
+        this.validator = validator;
     }
 
     @Override
-    public EventConcert add(EventDtoFactory eventCreate) {
-        EventConcert event = new EventMapper().concertFromDto(eventCreate);
+    public EventConcert add(EventDtoFactory dtoFactory) {
+        ConcertCreateDto dto = (ConcertCreateDto) dtoFactory.getDto();
+        validator.concertDtoValidate(dto);
+        EventConcert event = new EventMapper().concertFromDto(dto);
         dao.save(event);
         return event;
     }
@@ -43,15 +50,17 @@ public class EventConcertService implements IEventService <EventConcert> {
     }
 
     @Override
-    public EventConcert update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory eventCreateDto) {
+    public EventConcert update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory dtoFactory) {
 //        dao.save();
 
         EventConcert concert = dao.findById(uuid).orElseThrow();
         LocalDateTime dtCreate = concert.getDtCreate();
+        ConcertCreateDto dto = (ConcertCreateDto) dtoFactory.getDto();
+        validator.concertDtoValidate(dto);
         if (!concert.getDtUpdate().equals(lastKnowDtUpdate)){
             throw new IllegalStateException("файл был изменен");
         }else {
-            concert = new EventMapper().concertFromDto(eventCreateDto);
+            concert = new EventMapper().concertFromDto(dto);
             concert.setUuid(uuid);
             concert.setDtCreate(dtCreate);
         }

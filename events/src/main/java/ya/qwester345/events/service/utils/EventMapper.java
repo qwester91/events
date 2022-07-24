@@ -2,13 +2,15 @@ package ya.qwester345.events.service.utils;
 
 import ya.qwester345.events.dao.entity.EventConcert;
 import ya.qwester345.events.dao.entity.EventFilm;
+import ya.qwester345.events.dto.ConcertCreateDto;
+import ya.qwester345.events.dto.FilmCreateDto;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class EventMapper {
-    public EventConcert concertFromDto(EventDtoFactory eventCreateDto){
+    public EventConcert concertFromDto(ConcertCreateDto eventCreateDto){
         EventConcert concert = new EventConcert();
         concert.setCategory(eventCreateDto.getCategory());
         concert.setCurrency(eventCreateDto.getCurrency());
@@ -24,7 +26,7 @@ public class EventMapper {
         return concert;
     }
 
-    public EventFilm filmFromDto(EventDtoFactory eventCreateDto) {
+    public EventFilm filmFromDto(FilmCreateDto eventCreateDto) {
         EventFilm film = new EventFilm();
         film.setDuration(eventCreateDto.getDuration());
         film.setReleaseDate(eventCreateDto.getReleaseDate());

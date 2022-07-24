@@ -2,6 +2,7 @@ package ya.qwester345.classifier.countries.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ya.qwester345.classifier.countries.dao.ICountryDao;
@@ -11,6 +12,8 @@ import ya.qwester345.classifier.countries.dto.ListOfEntity;
 import ya.qwester345.classifier.countries.dto.api.IDto;
 import ya.qwester345.classifier.countries.service.api.IClassifierService;
 import ya.qwester345.classifier.countries.service.mapper.Mapper;
+
+import java.util.UUID;
 
 @Service
 public class ClassifireCountryService implements IClassifierService<Country,CountryDto> {
@@ -34,5 +37,11 @@ public class ClassifireCountryService implements IClassifierService<Country,Coun
     @Override
     public ListOfEntity<Country> get(Pageable pageable) {
         return new ListOfEntity<Country>(dao.findAll(pageable));
+    }
+
+    @Override
+    public boolean isExist(UUID uuid) {
+        boolean exists = dao.existsById(uuid);
+        return exists;
     }
 }

@@ -12,6 +12,8 @@ import ya.qwester345.classifier.countries.dto.api.IDto;
 import ya.qwester345.classifier.countries.service.api.IClassifierService;
 import ya.qwester345.classifier.countries.service.mapper.Mapper;
 
+import java.util.UUID;
+
 @Service
 @Qualifier("category")
 public class ClassifireCategoryService implements IClassifierService<Category,CategoryDto> {
@@ -34,5 +36,11 @@ public class ClassifireCategoryService implements IClassifierService<Category,Ca
     @Override
     public ListOfEntity<Category> get(Pageable pageable) {
         return new ListOfEntity<Category>(dao.findAll(pageable));
+    }
+
+    @Override
+    public boolean isExist(UUID uuid) {
+        boolean exists = dao.existsById(uuid);
+        return exists;
     }
 }

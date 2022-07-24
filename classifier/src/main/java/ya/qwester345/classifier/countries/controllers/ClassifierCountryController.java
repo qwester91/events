@@ -10,6 +10,8 @@ import ya.qwester345.classifier.countries.dto.CountryDto;
 import ya.qwester345.classifier.countries.dto.ListOfEntity;
 import ya.qwester345.classifier.countries.service.api.IClassifierService;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1/classifier/country")
 public class ClassifierCountryController {
@@ -22,6 +24,14 @@ public class ClassifierCountryController {
     @PostMapping
     public ResponseEntity<Country> addCountry(@RequestBody CountryDto country){
         return new ResponseEntity<>(service.add(country), HttpStatus.CREATED);
+
+    }
+
+    @GetMapping("/{uuid}")
+    public ResponseEntity<HttpStatus> getCountry(@PathVariable UUID uuid){
+        if(service.isExist(uuid)){
+            return new ResponseEntity<>(HttpStatus.OK);}
+        else {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
 
     }
 

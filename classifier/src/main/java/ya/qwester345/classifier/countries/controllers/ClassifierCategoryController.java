@@ -12,6 +12,8 @@ import ya.qwester345.classifier.countries.dto.CategoryDto;
 import ya.qwester345.classifier.countries.dto.ListOfEntity;
 import ya.qwester345.classifier.countries.service.api.IClassifierService;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1/classifier/concert/category")
 public class ClassifierCategoryController {
@@ -27,6 +29,14 @@ public class ClassifierCategoryController {
     @PostMapping
     public ResponseEntity<Category> addCountry(@RequestBody CategoryDto category){
         return new ResponseEntity<>(service.add(category), HttpStatus.CREATED);
+
+    }
+
+    @GetMapping("/{uuid}")
+    public ResponseEntity<HttpStatus> getCountry(@PathVariable UUID uuid){
+        if(service.isExist(uuid)){
+            return new ResponseEntity<>(HttpStatus.OK);}
+        else {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
 
     }
 

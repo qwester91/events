@@ -7,6 +7,7 @@ import ya.qwester345.events.dao.api.IEventFilmDao;
 import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventFilm;
 import ya.qwester345.events.dao.entity.enums.EventType;
+import ya.qwester345.events.dto.FilmCreateDto;
 import ya.qwester345.events.dto.ListOfEvents;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.api.IEventService;
@@ -25,8 +26,9 @@ public class EventFilmService implements IEventService<EventFilm> {
     }
 
     @Override
-    public EventFilm add(EventDtoFactory eventCreate) {
-        EventFilm event = new EventMapper().filmFromDto(eventCreate);
+    public EventFilm add(EventDtoFactory dtoFactory) {
+        FilmCreateDto dto = (FilmCreateDto) dtoFactory.getDto();
+        EventFilm event = new EventMapper().filmFromDto(dto);
         dao.save(event);
         return event;
     }
@@ -42,13 +44,14 @@ public class EventFilmService implements IEventService<EventFilm> {
     }
 
     @Override
-    public EventFilm update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory eventCreateDto) {
+    public EventFilm update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory dtoFactory) {
         EventFilm film = dao.findById(uuid).orElseThrow();
         LocalDateTime dtCreate = film.getDtCreate();
+        FilmCreateDto dto = (FilmCreateDto) dtoFactory.getDto();
         if (!film.getDtUpdate().equals(lastKnowDtUpdate)){
             throw new IllegalStateException("файл был изменен");
         }else {
-            film = new EventMapper().filmFromDto(eventCreateDto);
+            film = new EventMapper().filmFromDto(dto);
             film.setUuid(uuid);
             film.setDtCreate(dtCreate);
         }
