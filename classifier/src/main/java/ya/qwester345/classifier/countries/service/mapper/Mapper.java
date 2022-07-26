@@ -6,12 +6,10 @@ import ya.qwester345.classifier.countries.dao.entity.Category;
 import ya.qwester345.classifier.countries.dao.entity.Country;
 import ya.qwester345.classifier.countries.dto.CategoryDto;
 import ya.qwester345.classifier.countries.dto.CountryDto;
-import ya.qwester345.classifier.countries.dto.api.IDto;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 @Service
-@Qualifier("mapper")
 public class Mapper  {
 
 
@@ -25,7 +23,7 @@ public class Mapper  {
         return country;
     }
 
-    public Category entityFromDto(CategoryDto dto){
+    public Category categoryFromDto(CategoryDto dto){
         Category category = new Category();
         category.setTitle(dto.getTitle());
         category.setDtCreate(LocalDateTime.now());

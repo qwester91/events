@@ -12,6 +12,7 @@ import ya.qwester345.users.dto.UserCreateDto;
 import ya.qwester345.users.dto.UserReadDto;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Component
@@ -25,7 +26,12 @@ public class Mapper {
 
     public UserEntity getUserFromCreateDto(UserCreateDto dto) {
         UserEntity user = new UserEntity();
-        user.setAuthorities(dto.getRole());
+
+            if (Role.ADMIN.equals(dto.getRole())){
+                user.setAuthorities(List.of(new Name("ROLE_ADMIN"),new Name("ROLE_USER")));
+            }else {
+                user.setAuthorities(List.of(new Name("ROLE_USER")));}
+
         user.setUuid(UUID.randomUUID());
         user.setEmail(dto.getEmail());
         user.setUsername(dto.getNick());
@@ -79,11 +85,9 @@ public class Mapper {
         user.setEmail(dto.getEmail());
         user.setUsername(dto.getNick());
         user.setPassword(encoder.encode(dto.getPassword()));
-        user.setDtCreate(LocalDateTime.now());
+        user.setDtCreate(LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS));
         user.setDtUpdate(user.getDtCreate());
         user.setStatus(Status.WAITING_ACTIVATION);
-        Name name = new Name("ROLE_USER");
-        user.setAuthorities( List.of(name));
         return user;
     }
 }

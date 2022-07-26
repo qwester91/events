@@ -3,6 +3,7 @@ package ya.qwester345.events.service;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ya.qwester345.events.dao.api.IEventConcertDao;
 import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventConcert;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
+@Transactional(readOnly = true)
 @Qualifier("EventConcertService")
 public class EventConcertService implements IEventService <EventConcert> {
     private final IEventConcertDao dao;
@@ -30,6 +32,7 @@ public class EventConcertService implements IEventService <EventConcert> {
     }
 
     @Override
+    @Transactional
     public EventConcert add(EventDtoFactory dtoFactory) {
         ConcertCreateDto dto = (ConcertCreateDto) dtoFactory.getDto();
         validator.concertDtoValidate(dto);
@@ -50,6 +53,7 @@ public class EventConcertService implements IEventService <EventConcert> {
     }
 
     @Override
+    @Transactional
     public EventConcert update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory dtoFactory) {
 //        dao.save();
 

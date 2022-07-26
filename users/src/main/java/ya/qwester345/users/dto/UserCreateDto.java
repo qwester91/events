@@ -12,7 +12,7 @@ public class UserCreateDto {
     private String email;
     private String password;
     private String nick;
-    private List<Name> role;
+    private Role role;
     private Status status;
 
     public String getEmail() {
@@ -39,11 +39,11 @@ public class UserCreateDto {
         this.nick = nick;
     }
 
-    public List<Name> getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(List<Name> role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

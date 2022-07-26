@@ -34,10 +34,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserEntity> createNewUser(@RequestBody UserCreateDto dto){
+    public ResponseEntity<UserReadDto> createNewUser(@RequestBody UserCreateDto dto){
         UserEntity userFromCreateDto = mapper.getUserFromCreateDto(dto);
         userService.createUser(userFromCreateDto);
-        return new ResponseEntity<>(userFromCreateDto, HttpStatus.CREATED);
+        UserReadDto newDto = mapper.getUserReadDto(userFromCreateDto);
+        return new ResponseEntity<>(newDto, HttpStatus.CREATED);
     }
     @GetMapping
     public ListOfEntity<UserReadDto> getListOfUsers(@RequestParam(value = "page", defaultValue = "1") Integer page,

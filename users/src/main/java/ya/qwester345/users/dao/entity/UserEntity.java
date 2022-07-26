@@ -26,7 +26,7 @@ public class UserEntity implements UserDetails {
     @Column(name = "dt_create")
     private LocalDateTime dtCreate;
     @Version
-    @Column(name = "dt_update")
+    @Column(name = "dt_update", length = 3)
     private LocalDateTime dtUpdate;
 
     @ManyToMany(fetch = FetchType.EAGER)

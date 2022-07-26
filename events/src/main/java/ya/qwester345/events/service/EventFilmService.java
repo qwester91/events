@@ -3,6 +3,7 @@ package ya.qwester345.events.service;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ya.qwester345.events.dao.api.IEventFilmDao;
 import ya.qwester345.events.dao.entity.Event;
 import ya.qwester345.events.dao.entity.EventFilm;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
+@Transactional(readOnly = true)
 @Qualifier("EventFilmService")
 public class EventFilmService implements IEventService<EventFilm> {
     private final IEventFilmDao dao;
@@ -26,6 +28,7 @@ public class EventFilmService implements IEventService<EventFilm> {
     }
 
     @Override
+    @Transactional
     public EventFilm add(EventDtoFactory dtoFactory) {
         FilmCreateDto dto = (FilmCreateDto) dtoFactory.getDto();
         EventFilm event = new EventMapper().filmFromDto(dto);
@@ -44,6 +47,7 @@ public class EventFilmService implements IEventService<EventFilm> {
     }
 
     @Override
+    @Transactional
     public EventFilm update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory dtoFactory) {
         EventFilm film = dao.findById(uuid).orElseThrow();
         LocalDateTime dtCreate = film.getDtCreate();
