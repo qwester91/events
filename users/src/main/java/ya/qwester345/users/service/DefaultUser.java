@@ -31,10 +31,10 @@ public class DefaultUser implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
     try{
-        Name authorities = new Name(Role.ROLE_ADMIN.name());
+        Name authorities = new Name("ROLE_ADMIN");
         authorityDao.save(authorities);
-        authorities.setName(Role.ROLE_USER.name());
-        authorityDao.save(authorities);
+        Name authorities1 = new Name("ROLE_USER");
+        authorityDao.save(authorities1);
 
 
             UserEntity admin = new UserEntity();
@@ -43,10 +43,11 @@ public class DefaultUser implements CommandLineRunner {
             admin.setDtUpdate(admin.getDtCreate());
             admin.setEmail("admin@gmail.com");
             admin.setUsername("admin");
-            admin.setAuthorities(List.of((new Name(Role.ROLE_ADMIN.name())),(new Name(Role.ROLE_USER.name()))));
             admin.setStatus(Status.ACTIVATED);
             admin.setPassword(encoder.encode("admin"));
-            admin.setRole(Role.ROLE_ADMIN);
+            Name roleAdmin = new Name("ROLE_ADMIN");
+            Name roleUser = new Name("ROLE_USER");
+            admin.setAuthorities(List.of(roleAdmin, roleUser));
 
 
             dao.save(admin);}

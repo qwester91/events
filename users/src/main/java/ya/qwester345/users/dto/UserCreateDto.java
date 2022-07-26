@@ -1,16 +1,18 @@
 package ya.qwester345.users.dto;
 
+import ya.qwester345.users.dao.entity.Name;
 import ya.qwester345.users.dao.entity.enums.Role;
 import ya.qwester345.users.dao.entity.enums.Status;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class UserCreateDto {
     private String email;
     private String password;
     private String nick;
-    private Role role;
+    private List<Name> role;
     private Status status;
 
     public String getEmail() {
@@ -37,11 +39,11 @@ public class UserCreateDto {
         this.nick = nick;
     }
 
-    public Role getRole() {
+    public List<Name> getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(List<Name> role) {
         this.role = role;
     }
 

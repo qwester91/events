@@ -11,27 +11,19 @@ import java.util.UUID;
 @Table(name = "auth_granted_authority")
 public class Name implements GrantedAuthority {
     @Id
-    private String name;
+    private String authority;
 
     public Name(String authority) {
-        this.name = authority;
+        this.authority = authority;
 
     }
 
     public Name() {
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String getAuthority() {
-        return getName();
+        return authority;
     }
 
 

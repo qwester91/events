@@ -21,9 +21,6 @@ public class UserEntity implements UserDetails {
     @Column(name = "email")
     private String email;
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private Role role;
-    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
     @Column(name = "dt_create")
@@ -35,7 +32,7 @@ public class UserEntity implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "user_service_schema", name = "users_roles",
             joinColumns = { @JoinColumn(name = "user_mail", referencedColumnName = "email")},
-            inverseJoinColumns = { @JoinColumn(name = "role_name", referencedColumnName = "name")})
+            inverseJoinColumns = { @JoinColumn(name = "role_name", referencedColumnName = "authority")})
     private List<Name> authorities;
 
     public UserEntity() {
@@ -70,12 +67,6 @@ public class UserEntity implements UserDetails {
     }
 
 
-    public Role getRole() {
-        return role;
-    }
-
-
-
 
     public Status getStatus() {
         return status;
@@ -105,10 +96,6 @@ public class UserEntity implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public void setAuthorities(List<Name> authorities) {

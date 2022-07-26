@@ -1,9 +1,11 @@
 package ya.qwester345.users.dto;
 
+import ya.qwester345.users.dao.entity.Name;
 import ya.qwester345.users.dao.entity.enums.Role;
 import ya.qwester345.users.dao.entity.enums.Status;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class UserReadDto {
