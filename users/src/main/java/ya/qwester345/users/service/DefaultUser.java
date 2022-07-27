@@ -11,6 +11,7 @@ import ya.qwester345.users.dao.entity.enums.Role;
 import ya.qwester345.users.dao.entity.enums.Status;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,15 +40,15 @@ public class DefaultUser implements CommandLineRunner {
 
             UserEntity admin = new UserEntity();
             admin.setUuid(UUID.randomUUID());
-            admin.setDtCreate(LocalDateTime.now());
+            admin.setDtCreate(LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS));
             admin.setDtUpdate(admin.getDtCreate());
             admin.setEmail("admin@gmail.com");
             admin.setUsername("admin");
             admin.setStatus(Status.ACTIVATED);
             admin.setPassword(encoder.encode("admin"));
             Name roleAdmin = new Name("ROLE_ADMIN");
-            Name roleUser = new Name("ROLE_USER");
-            admin.setAuthorities(List.of(roleAdmin, roleUser));
+
+            admin.setAuthorities(List.of(roleAdmin));
 
 
             dao.save(admin);}

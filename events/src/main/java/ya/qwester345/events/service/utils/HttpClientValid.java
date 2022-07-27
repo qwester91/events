@@ -18,7 +18,7 @@ public class HttpClientValid {
         this.restTemplate = new RestTemplate();
     }
 
-    public Boolean isExistInClassifiers(String url, UUID uuid){
+    public boolean isExistInClassifiers(String url, UUID uuid){
         URI getUrl = URI.create(url + uuid);
 
         HttpStatus status =null;

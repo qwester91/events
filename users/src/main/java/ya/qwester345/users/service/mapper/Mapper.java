@@ -36,8 +36,9 @@ public class Mapper {
         user.setEmail(dto.getEmail());
         user.setUsername(dto.getNick());
         user.setPassword(encoder.encode(dto.getPassword()));
-        user.setDtCreate(LocalDateTime.now());
-        user.setDtUpdate(user.getDtCreate());
+        LocalDateTime localDateTime = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
+        user.setDtCreate(localDateTime);
+        user.setDtUpdate(localDateTime);
         user.setStatus(dto.getStatus());
         return user;
     }
@@ -86,7 +87,7 @@ public class Mapper {
         user.setUsername(dto.getNick());
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setDtCreate(LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS));
-        user.setDtUpdate(user.getDtCreate());
+        user.setDtUpdate(user.getDtCreate().truncatedTo(ChronoUnit.MILLIS));
         user.setStatus(Status.WAITING_ACTIVATION);
         return user;
     }

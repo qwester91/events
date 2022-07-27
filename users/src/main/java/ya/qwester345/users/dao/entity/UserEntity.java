@@ -23,15 +23,15 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
-    @Column(name = "dt_create")
+    @Column(name = "dt_create",precision = 3)
     private LocalDateTime dtCreate;
     @Version
-    @Column(name = "dt_update", length = 3)
+    @Column(name = "dt_update", precision = 3)
     private LocalDateTime dtUpdate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(schema = "user_service_schema", name = "users_roles",
-            joinColumns = { @JoinColumn(name = "user_mail", referencedColumnName = "email")},
+            joinColumns = { @JoinColumn(name = "user_mail", referencedColumnName = "email" ,nullable = false, updatable = false)},
             inverseJoinColumns = { @JoinColumn(name = "role_name", referencedColumnName = "authority")})
     private List<Name> authorities;
 

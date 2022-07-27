@@ -21,9 +21,10 @@ import ya.qwester345.users.service.api.IUserService;
 import ya.qwester345.users.service.mapper.Mapper;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 @Service
-
+@Transactional(readOnly = true)
 public class UserService implements UserDetailsManager , IUserService {
 
     private final IUserDao dao;
@@ -34,21 +35,13 @@ public class UserService implements UserDetailsManager , IUserService {
         this.dao = dao;
         this.authorityDao = authorityDao;
         this.mapper = mapper;
-//    UserCreateDto userCreateDto = new UserCreateDto();
-//    userCreateDto.setEmail("admin@admin.ru");
-//    userCreateDto.setNick("admin");
-//    userCreateDto.setPassword("123");
-//    userCreateDto.setRole(Role.ADMIN);
-//    userCreateDto.setStatus(Status.ACTIVATED);
-//
-//    this.createUser(mapper.getUserFromCreateDto(userCreateDto));
     }
 
 
-
+@Transactional
     @Override
     public void createUser(UserDetails user) {
-        dao.saveAndFlush((UserEntity) user);
+        dao.save((UserEntity) user);
 
     }
 
@@ -76,6 +69,7 @@ public class UserService implements UserDetailsManager , IUserService {
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
+
     public ListOfEntity<UserReadDto> getListOfUsers(Pageable pageable) {
         ListOfEntity<UserEntity> userListOfEntity = new ListOfEntity<>(dao.findAll(pageable));
         return mapper.getReadDtoFromEntity(userListOfEntity);
@@ -90,12 +84,12 @@ public class UserService implements UserDetailsManager , IUserService {
     }
 
 
-
+@Transactional
     @Override
     public void update(UUID uuid, LocalDateTime lastKnowDtUpdate, UserCreateDto userCreateDto) {
         UserEntity user = dao.findById(uuid).orElseThrow();
         LocalDateTime dtCreate = user.getDtCreate();
-        if (!user.getDtUpdate().equals(lastKnowDtUpdate)) {
+        if (!user.getDtUpdate().truncatedTo(ChronoUnit.MILLIS).equals(lastKnowDtUpdate)) {
             throw new IllegalStateException("файл был изменен");
         } else {
             user = mapper.getUserFromCreateDto(userCreateDto);
