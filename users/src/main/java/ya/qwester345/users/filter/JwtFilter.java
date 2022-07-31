@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ya.qwester345.users.config.utils.JwtTokenUtil;
 import ya.qwester345.users.dao.entity.UserEntity;
+import ya.qwester345.users.service.DetailsService;
 import ya.qwester345.users.service.UserService;
 
 import javax.servlet.FilterChain;
@@ -25,9 +26,9 @@ import static org.apache.logging.log4j.util.Strings.isEmpty;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final UserService userManager;
+    private final DetailsService userManager;
 
-    public JwtFilter(UserService userManager) {
+    public JwtFilter(DetailsService userManager) {
         this.userManager = userManager;
     }
 
@@ -51,8 +52,8 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         // Get user identity and set it on the spring security context
-        UserEntity userDetails = userManager
-                .findUserEntitiesByEmail(JwtTokenUtil.getEmail(token));
+        UserDetails userDetails = userManager
+                .loadUserByUsername(JwtTokenUtil.getEmail(token));
 
         UsernamePasswordAuthenticationToken
                 authentication = new UsernamePasswordAuthenticationToken(

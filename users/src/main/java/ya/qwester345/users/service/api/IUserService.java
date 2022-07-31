@@ -10,11 +10,14 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface IUserService {
+    UserEntity findUserEntitiesByEmail(String email);
 
     ListOfEntity<UserReadDto> getListOfUsers(Pageable pageable);
 
     UserReadDto getUser(UUID uuid);
 
     void update(UUID uuid, LocalDateTime lastKnowDtUpdate, UserCreateDto userCreateDto);
+
+    UserReadDto getUserFromHolder();
 }
 

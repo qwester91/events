@@ -26,11 +26,11 @@ public class Mapper {
 
     public UserEntity getUserFromCreateDto(UserCreateDto dto) {
         UserEntity user = new UserEntity();
-
-            if (Role.ADMIN.equals(dto.getRole())){
-                user.setAuthorities(List.of(new Name("ROLE_ADMIN"),new Name("ROLE_USER")));
-            }else {
-                user.setAuthorities(List.of(new Name("ROLE_USER")));}
+        if (Role.ADMIN.equals(dto.getRole())){
+            user.setAuthorities(List.of(new Name("ROLE_ADMIN"),new Name("ROLE_USER")));
+        }else{
+            user.setAuthorities(List.of(new Name("ROLE_USER")));
+        }
 
         user.setUuid(UUID.randomUUID());
         user.setEmail(dto.getEmail());

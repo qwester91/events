@@ -1,7 +1,5 @@
 package ya.qwester345.users.controllers;
 
-import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ya.qwester345.users.config.utils.JwtTokenUtil;
@@ -49,7 +47,7 @@ public class UserLoginController {
     public UserReadDto getMe(@RequestHeader (name = "Authorization") String token){
 
 
-      return userService.getUser();
+      return userService.getUserFromHolder();
 
     }
 

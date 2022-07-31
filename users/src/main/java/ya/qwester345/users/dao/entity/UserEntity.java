@@ -23,10 +23,10 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
-    @Column(name = "dt_create",precision = 3)
+    @Column(name = "dt_create")
     private LocalDateTime dtCreate;
     @Version
-    @Column(name = "dt_update", precision = 3)
+    @Column(name = "dt_update")
     private LocalDateTime dtUpdate;
 
     @ManyToMany(fetch = FetchType.EAGER)
