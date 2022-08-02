@@ -3,17 +3,17 @@ package ya.qwester345.events.service.utils;
 import org.springframework.stereotype.Component;
 import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.ConcertCreateDto;
-import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.exeptions.InvalidDtoException;
+import ya.qwester345.events.service.utils.httpClients.HttpClientClassifiers;
 
 import java.time.LocalDateTime;
-
+@Component
 public class Validator{
 
-    private final HttpClientValid valid;
+    private final HttpClientClassifiers clientClassifiers;
 
-    public Validator(HttpClientValid valid) {
-        this.valid = valid;
+    public Validator(HttpClientClassifiers valid) {
+        this.clientClassifiers = valid;
     }
 
     public void concertDtoValidate(ConcertCreateDto factory){
@@ -33,7 +33,7 @@ public class Validator{
             if (factory.getDtEndOfSale().compareTo(factory.getDtEvent()) < 0 ){
                 throw new InvalidDtoException("вы шо, продаете билеты на уже уехавший поезд?");
             }
-            if (!valid.isExistInClassifiers("http://localhost:81/api/v1/classifier/concert/category/", factory.getCategory())){
+            if (!clientClassifiers.isCategoryExistInClassifiers(factory.getCategory())){
                 throw new InvalidDtoException("не существует такой категории");
             }
 

@@ -1,6 +1,7 @@
 package ya.qwester345.events.controllers;
 
 import org.springframework.data.domain.*;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,8 @@ public class EventController {
 
     @GetMapping("/{type}")
     public ListOfEvents<Event> getEventsByType(@PathVariable String type, @RequestParam(value = "page", defaultValue = "1") Integer page,
-                                               @RequestParam(value = "size", defaultValue = "10") Integer size){
+                                               @RequestParam(value = "size", defaultValue = "10") Integer size,
+    @RequestHeader(value = "Authorization") String token){
 
         Pageable pageable = PageRequest.of(page-1, size);
 
