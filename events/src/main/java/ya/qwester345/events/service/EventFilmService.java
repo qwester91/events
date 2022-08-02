@@ -55,9 +55,10 @@ public class EventFilmService implements IEventService<EventFilm> {
         if (!film.getDtUpdate().equals(lastKnowDtUpdate)){
             throw new IllegalStateException("файл был изменен");
         }else {
-            film = new EventMapper().filmFromDto(dto);
-            film.setUuid(uuid);
-            film.setDtCreate(dtCreate);
+            film.setCountry(dto.getCountry());
+            film.setDuration(dto.getDuration());
+            film.setReleaseDate(dto.getReleaseDate());
+
         }
         dao.save(film);
         return film;

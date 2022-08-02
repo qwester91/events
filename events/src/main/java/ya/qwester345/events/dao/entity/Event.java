@@ -22,6 +22,7 @@ public class Event {
     private EventType type;
     private EventStatus status;
     private UUID currency;
+    private String author;
 
 
     public Event() {
@@ -34,6 +35,7 @@ public class Event {
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
+
     @Column(name = "dt_create")
     public LocalDateTime getDtCreate() {
         return dtCreate;
@@ -42,6 +44,7 @@ public class Event {
     public void setDtCreate(LocalDateTime dtCreate) {
         this.dtCreate = dtCreate;
     }
+
     @Version
     @Column(name = "dt_update")
     public LocalDateTime getDtUpdate() {
@@ -51,6 +54,7 @@ public class Event {
     public void setDtUpdate(LocalDateTime dtUpdate) {
         this.dtUpdate = dtUpdate;
     }
+
     @Column (name = "title")
     public String getTitle() {
         return title;
@@ -59,7 +63,8 @@ public class Event {
     public void setTitle(String title) {
         this.title = title;
     }
-@Column(name = "description")
+
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -67,7 +72,8 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
-@Column(name = "dt_event")
+
+    @Column(name = "dt_event")
     public LocalDateTime getDtEvent() {
         return dtEvent;
     }
@@ -75,7 +81,8 @@ public class Event {
     public void setDtEvent(LocalDateTime dtEvent) {
         this.dtEvent = dtEvent;
     }
-@Column(name = "dt_end_of_sale")
+
+    @Column(name = "dt_end_of_sale")
     public LocalDateTime getDtEndOfSale() {
         return dtEndOfSale;
     }
@@ -83,6 +90,7 @@ public class Event {
     public void setDtEndOfSale(LocalDateTime dtEndOfSale) {
         this.dtEndOfSale = dtEndOfSale;
     }
+
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     public EventType getType() {
@@ -92,6 +100,7 @@ public class Event {
     public void setType(EventType type) {
         this.type = type;
     }
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     public EventStatus getStatus() {
@@ -101,12 +110,21 @@ public class Event {
     public void setStatus(EventStatus status) {
         this.status = status;
     }
-@Column(name = "currency")
+
+    @Column(name = "currency")
     public UUID getCurrency() {
         return currency;
     }
 
     public void setCurrency(UUID currency) {
         this.currency = currency;
+    }
+    @Column(name = "author")
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

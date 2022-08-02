@@ -62,9 +62,14 @@ public class UserService implements IUserService {
         if (!user.getDtUpdate().truncatedTo(ChronoUnit.MILLIS).equals(lastKnowDtUpdate)) {
             throw new IllegalStateException("файл был изменен");
         } else {
-            user = mapper.getUserFromCreateDto(userCreateDto);
-            user.setUuid(uuid);
-            user.setDtCreate(dtCreate);
+            user.setPassword(userCreateDto.getPassword());
+            user.setUsername(userCreateDto.getNick());
+            user.setPassword(userCreateDto.getPassword());
+            user.setStatus(userCreateDto.getStatus());
+//            user = mapper.getUserFromCreateDto(userCreateDto);
+//            user.setUuid(uuid);
+//            user.setDtCreate(dtCreate);
+//            user.setDtUpdate(lastKnowDtUpdate);
         }
         dao.save(user);
 
