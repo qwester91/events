@@ -50,7 +50,6 @@ public class EventFilmService implements IEventService<EventFilm> {
     @Transactional
     public EventFilm update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory dtoFactory) {
         EventFilm film = dao.findById(uuid).orElseThrow();
-        LocalDateTime dtCreate = film.getDtCreate();
         FilmCreateDto dto = (FilmCreateDto) dtoFactory.getDto();
         if (!film.getDtUpdate().equals(lastKnowDtUpdate)){
             throw new IllegalStateException("файл был изменен");

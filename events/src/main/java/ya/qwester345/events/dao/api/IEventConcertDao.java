@@ -14,7 +14,7 @@ import java.util.UUID;
 @Repository
 public interface IEventConcertDao extends JpaRepository<EventConcert, UUID> {
 
-
+    @Query( )
     Page<Event> findAllByType(EventType type, Pageable pageable);
 
 }
