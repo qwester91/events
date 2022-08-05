@@ -15,12 +15,13 @@ public class EventCreateDto {
     private EventType type;
     private EventStatus status;
     private UUID currency;
+    private String author;
 
 
     public EventCreateDto() {
     }
 
-    public EventCreateDto(String title, String description, LocalDateTime dtEvent, LocalDateTime dtEndOfSale, EventType type, EventStatus status, UUID currency) {
+    public EventCreateDto(String title, String description, LocalDateTime dtEvent, LocalDateTime dtEndOfSale, EventType type, EventStatus status, UUID currency, String author) {
         this.title = title;
         this.description = description;
         this.dtEvent = dtEvent;
@@ -28,6 +29,7 @@ public class EventCreateDto {
         this.type = type;
         this.status = status;
         this.currency = currency;
+        this.author = author;
     }
 
     public String getTitle() {

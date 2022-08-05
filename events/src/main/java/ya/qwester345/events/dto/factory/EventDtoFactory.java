@@ -24,6 +24,7 @@ public class EventDtoFactory {
     private LocalDate releaseDate;
     private Integer duration;
     private UUID category;
+    private String author;
 
     public EventDtoFactory() {
     }
@@ -124,12 +125,20 @@ public class EventDtoFactory {
         this.category = category;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public EventCreateDto getDto(){
         EventCreateDto dto;
         if (EventType.CONCERTS.equals(type)){
-           dto = new ConcertCreateDto(title,description,dtEvent,dtEndOfSale,type,status,currency,category);
+           dto = new ConcertCreateDto(title,description,dtEvent,dtEndOfSale,type,status,currency,category, author);
         }else if(EventType.FILMS.equals(type)){
-            dto = new FilmCreateDto(title, description, dtEvent,dtEndOfSale, type, status,currency, country, releaseYear,releaseDate,duration);
+            dto = new FilmCreateDto(title, description, dtEvent,dtEndOfSale, type, status,currency, country, releaseYear,releaseDate,duration, author);
         }else throw new IllegalArgumentException("не верно указан тип события");
         return dto;
     }

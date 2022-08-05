@@ -10,8 +10,10 @@ import ya.qwester345.events.dao.entity.enums.EventStatus;
 import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.EventCreateDto;
 import ya.qwester345.events.dto.ListOfEvents;
+import ya.qwester345.events.dto.UserDto;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.api.IFactory;
+import ya.qwester345.events.service.api.IUserService;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -23,14 +25,19 @@ import java.util.UUID;
 public class EventController {
 
    private final IFactory factory;
+   private final IUserService userService;
 
 
-    public EventController(IFactory factory) {
+    public EventController(IFactory factory, IUserService userService) {
         this.factory = factory;
+        this.userService = userService;
     }
 
     @PostMapping("/{type}")
     public ResponseEntity<Event> addEvent(@PathVariable(name = "type") String type ,@RequestBody EventDtoFactory eventCreate){
+        UserDto user = userService.getUser();
+        eventCreate.setAuthor(user.getUsername());
+
 
         return new ResponseEntity<>(this.factory.add(EventType.valueOf(type), eventCreate), HttpStatus.CREATED);
 
@@ -40,8 +47,7 @@ public class EventController {
 
     @GetMapping("/{type}")
     public ListOfEvents<Event> getEventsByType(@PathVariable String type, @RequestParam(value = "page", defaultValue = "1") Integer page,
-                                               @RequestParam(value = "size", defaultValue = "10") Integer size,
-    @RequestHeader(value = "Authorization") String token){
+                                               @RequestParam(value = "size", defaultValue = "10") Integer size){
 
         Pageable pageable = PageRequest.of(page-1, size);
 

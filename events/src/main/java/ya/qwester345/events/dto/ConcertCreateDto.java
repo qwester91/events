@@ -11,8 +11,8 @@ public class ConcertCreateDto extends EventCreateDto{
     private UUID category;
 
 
-    public ConcertCreateDto(String title, String description, LocalDateTime dtEvent, LocalDateTime dtEndOfSale, EventType type, EventStatus status, UUID currency, UUID category) {
-        super(title, description, dtEvent, dtEndOfSale, type, status, currency);
+    public ConcertCreateDto(String title, String description, LocalDateTime dtEvent, LocalDateTime dtEndOfSale, EventType type, EventStatus status, UUID currency, UUID category, String author) {
+        super(title, description, dtEvent, dtEndOfSale, type, status, currency, author);
         this.category = category;
     }
 

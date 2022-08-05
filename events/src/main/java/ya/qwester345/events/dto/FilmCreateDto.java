@@ -18,8 +18,8 @@ public class FilmCreateDto extends EventCreateDto{
     public FilmCreateDto(String title, String description, LocalDateTime dtEvent,
                          LocalDateTime dtEndOfSale, EventType type, EventStatus status,
                          UUID currency, UUID country, Integer releaseYear,
-                         LocalDate releaseDate, Integer duration) {
-        super(title, description, dtEvent, dtEndOfSale, type, status, currency);
+                         LocalDate releaseDate, Integer duration, String author) {
+        super(title, description, dtEvent, dtEndOfSale, type, status, currency, author);
         this.country = country;
         this.releaseYear = releaseYear;
         this.releaseDate = releaseDate;
