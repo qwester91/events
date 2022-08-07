@@ -1,6 +1,6 @@
 package ya.qwester345.users.dto;
 
-public class RegistrationDto {
+public class RegistrationDto implements ICreateDto {
 
     private String email;
     private String password;

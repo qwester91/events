@@ -11,6 +11,7 @@ import ya.qwester345.users.dao.entity.UserEntity;
 import ya.qwester345.users.dto.ListOfEntity;
 import ya.qwester345.users.dto.UserCreateDto;
 import ya.qwester345.users.dto.UserReadDto;
+import ya.qwester345.users.service.api.IMapper;
 import ya.qwester345.users.service.api.IUserService;
 import ya.qwester345.users.service.mapper.Mapper;
 
@@ -23,9 +24,9 @@ public class UserService implements IUserService {
 
     private final IUserDao dao;
     private final IAuthorityDao authorityDao;
-    private final Mapper mapper;
+    private final IMapper mapper;
 
-    public UserService(IUserDao dao, IAuthorityDao authorityDao, Mapper mapper) {
+    public UserService(IUserDao dao, IAuthorityDao authorityDao, IMapper mapper) {
         this.dao = dao;
         this.authorityDao = authorityDao;
         this.mapper = mapper;

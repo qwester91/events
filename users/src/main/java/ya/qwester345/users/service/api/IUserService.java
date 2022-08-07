@@ -1,6 +1,7 @@
 package ya.qwester345.users.service.api;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 import ya.qwester345.users.dao.entity.UserEntity;
 import ya.qwester345.users.dto.ListOfEntity;
 import ya.qwester345.users.dto.UserCreateDto;
@@ -19,5 +20,7 @@ public interface IUserService {
     void update(UUID uuid, LocalDateTime lastKnowDtUpdate, UserCreateDto userCreateDto);
 
     UserReadDto getUserFromHolder();
+
+    void createUser(UserDetails user);
 }
 

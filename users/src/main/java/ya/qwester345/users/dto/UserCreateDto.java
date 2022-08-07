@@ -8,20 +8,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public class UserCreateDto {
-    private String email;
+public class UserCreateDto implements ICreateDto {
     private String password;
+    private String email;
     private String nick;
     private Role role;
     private Status status;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getPassword() {
         return password;
@@ -29,6 +21,14 @@ public class UserCreateDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getNick() {

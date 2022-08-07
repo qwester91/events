@@ -12,7 +12,9 @@ import ya.qwester345.users.dto.ListOfEntity;
 import ya.qwester345.users.dto.UserCreateDto;
 import ya.qwester345.users.dto.UserReadDto;
 import ya.qwester345.users.service.UserService;
+import ya.qwester345.users.service.api.IMapper;
 import ya.qwester345.users.service.api.IUserService;
+import ya.qwester345.users.service.api.IValidator;
 import ya.qwester345.users.service.mapper.Mapper;
 
 import java.time.Instant;
@@ -23,18 +25,21 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
-    private final UserService userService;
+    private final IUserService userService;
     private final PasswordEncoder encoder;
-    private final Mapper mapper;
+    private final IMapper mapper;
+    private final IValidator validator;
 
-    public UserController(UserService userService, PasswordEncoder encoder, Mapper mapper) {
+    public UserController(IUserService userService, PasswordEncoder encoder, IMapper mapper, IValidator validator) {
         this.userService = userService;
         this.encoder = encoder;
         this.mapper = mapper;
+        this.validator = validator;
     }
 
     @PostMapping
     public ResponseEntity<UserReadDto> createNewUser(@RequestBody UserCreateDto dto){
+        validator.userCreateDtoValidate(dto);
         UserEntity userFromCreateDto = mapper.getUserFromCreateDto(dto);
         userService.createUser(userFromCreateDto);
         UserReadDto newDto = mapper.getUserReadDto(userFromCreateDto);
@@ -56,6 +61,7 @@ public class UserController {
     public void updateEvent(@PathVariable(name = "uuid") UUID uuid,
                             @PathVariable(name = "dt_update") Long dtUpdate,
                             @RequestBody UserCreateDto userCreateDto){
+        validator.userCreateDtoValidate(userCreateDto);
         LocalDateTime lastKnowDtUpdate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dtUpdate), ZoneId.systemDefault());
         this.userService.update(uuid, lastKnowDtUpdate, userCreateDto);
     }

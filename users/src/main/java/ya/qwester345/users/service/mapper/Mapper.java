@@ -10,20 +10,21 @@ import ya.qwester345.users.dto.ListOfEntity;
 import ya.qwester345.users.dto.RegistrationDto;
 import ya.qwester345.users.dto.UserCreateDto;
 import ya.qwester345.users.dto.UserReadDto;
+import ya.qwester345.users.service.api.IMapper;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Component
-public class Mapper {
+public class Mapper implements IMapper {
 
     private final PasswordEncoder encoder;
 
     public Mapper(PasswordEncoder encoder) {
         this.encoder = encoder;
     }
-
+    @Override
     public UserEntity getUserFromCreateDto(UserCreateDto dto) {
         UserEntity user = new UserEntity();
         if (Role.ADMIN.equals(dto.getRole())){
@@ -31,7 +32,6 @@ public class Mapper {
         }else{
             user.setAuthorities(List.of(new Name("ROLE_USER")));
         }
-
         user.setUuid(UUID.randomUUID());
         user.setEmail(dto.getEmail());
         user.setUsername(dto.getNick());
@@ -43,6 +43,7 @@ public class Mapper {
         return user;
     }
 
+    @Override
     public ListOfEntity<UserReadDto> getReadDtoFromEntity(ListOfEntity<UserEntity> all) {
         List<UserReadDto> readList = new ArrayList<>();
         ListOfEntity<UserReadDto> newList = new ListOfEntity<>();
@@ -59,6 +60,7 @@ public class Mapper {
         newList.setTotalPages(all.getTotalPages());
         return newList;
     }
+    @Override
     public UserReadDto getUserReadDto(UserEntity user){
         UserReadDto dto = new UserReadDto();
         dto.setDtCreate(user.getDtCreate());
@@ -72,12 +74,11 @@ public class Mapper {
                 dto.setRole(Role.ADMIN);
             }
         }
-
-
         dto.setStatus(user.getStatus());
         return dto;
     }
 
+    @Override
     public UserEntity getUserFromRegistrationDto(RegistrationDto dto) {
         UserEntity user = new UserEntity();
         Name authority = new Name("ROLE_USER");

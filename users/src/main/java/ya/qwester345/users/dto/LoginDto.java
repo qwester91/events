@@ -1,11 +1,8 @@
 package ya.qwester345.users.dto;
 
-public class LoginDto {
+public class LoginDto implements ICreateDto{
     private String email;
     private String password;
-
-    public LoginDto() {
-    }
 
     public String getEmail() {
         return email;
