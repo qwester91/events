@@ -1,15 +1,20 @@
 package ya.qwester345.events.service.utils;
 
+import org.springframework.stereotype.Component;
 import ya.qwester345.events.dao.entity.EventConcert;
 import ya.qwester345.events.dao.entity.EventFilm;
 import ya.qwester345.events.dto.ConcertCreateDto;
+import ya.qwester345.events.dto.ConcertReadDto;
 import ya.qwester345.events.dto.FilmCreateDto;
+import ya.qwester345.events.dto.FilmReadDto;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
+import ya.qwester345.events.service.utils.api.IEventMapper;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+@Component
+public class EventMapper implements IEventMapper {
 
-public class EventMapper {
     public EventConcert concertFromDto(ConcertCreateDto eventCreateDto){
         EventConcert concert = new EventConcert();
         concert.setCategory(eventCreateDto.getCategory());
@@ -23,6 +28,7 @@ public class EventMapper {
         concert.setTitle(eventCreateDto.getTitle());
         concert.setType(eventCreateDto.getType());
         concert.setUuid(UUID.randomUUID());
+        concert.setAuthor(eventCreateDto.getAuthor());
         return concert;
     }
 
@@ -41,6 +47,43 @@ public class EventMapper {
         film.setTitle(eventCreateDto.getTitle());
         film.setType(eventCreateDto.getType());
         film.setUuid(UUID.randomUUID());
+        film.setAuthor(eventCreateDto.getAuthor());
         return film;
+    }
+
+    @Override
+    public FilmReadDto dtoFromFilmEntity(EventFilm eventFilm) {
+        FilmReadDto dto = new FilmReadDto(eventFilm.getUuid(),
+                eventFilm.getDtCreate(),
+                eventFilm.getDtUpdate(),
+                eventFilm.getTitle(),
+                eventFilm.getDescription(),
+                eventFilm.getDtEvent(),
+                eventFilm.getDtEndOfSale(),
+                eventFilm.getType(),
+                eventFilm.getStatus(),
+                eventFilm.getCurrency(),
+                eventFilm.getCountry(),
+                eventFilm.getReleaseYear(),
+                eventFilm.getReleaseDate(),
+                eventFilm.getDuration());
+        return dto;
+    }
+
+    @Override
+    public ConcertReadDto dtoFromConcertEntity(EventConcert eventConcert) {
+       ConcertReadDto dto = new ConcertReadDto(
+                eventConcert.getUuid(),
+                eventConcert.getDtCreate(),
+                eventConcert.getDtUpdate(),
+                eventConcert.getTitle(),
+                eventConcert.getDescription(),
+                eventConcert.getDtEvent(),
+                eventConcert.getDtEndOfSale(),
+                eventConcert.getType(),
+                eventConcert.getStatus(),
+                eventConcert.getCurrency(),
+                eventConcert.getCategory());
+        return dto;
     }
 }

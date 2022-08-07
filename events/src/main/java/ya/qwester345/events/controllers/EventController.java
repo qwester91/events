@@ -10,8 +10,10 @@ import ya.qwester345.events.dao.entity.enums.EventStatus;
 import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.EventCreateDto;
 import ya.qwester345.events.dto.ListOfEvents;
+import ya.qwester345.events.dto.ReadDto;
 import ya.qwester345.events.dto.UserDto;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
+import ya.qwester345.events.service.UsersService;
 import ya.qwester345.events.service.api.IFactory;
 import ya.qwester345.events.service.api.IUserService;
 
@@ -34,12 +36,12 @@ public class EventController {
     }
 
     @PostMapping("/{type}")
-    public ResponseEntity<Event> addEvent(@PathVariable(name = "type") String type ,@RequestBody EventDtoFactory eventCreate){
+    public ResponseEntity<ReadDto> addEvent(@PathVariable(name = "type") String type ,@RequestBody EventDtoFactory eventCreate){
         UserDto user = userService.getUser();
         eventCreate.setAuthor(user.getUsername());
 
 
-        return new ResponseEntity<>(this.factory.add(EventType.valueOf(type), eventCreate), HttpStatus.CREATED);
+        return new ResponseEntity<ReadDto>(this.factory.add(EventType.valueOf(type), eventCreate), HttpStatus.CREATED);
 
     }
 
@@ -55,7 +57,7 @@ public class EventController {
 
     }
     @GetMapping("/{type}/{uuid}")
-    public Event getEventsByUuid(@PathVariable(name = "type")String type,@PathVariable UUID uuid){
+    public ReadDto getEventsByUuid(@PathVariable(name = "type")String type, @PathVariable UUID uuid){
         return factory.getByUuid(EventType.valueOf(type),uuid);
     }
     @GetMapping("/test")

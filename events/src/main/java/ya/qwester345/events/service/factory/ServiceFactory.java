@@ -12,6 +12,7 @@ import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.ConcertCreateDto;
 import ya.qwester345.events.dto.EventCreateDto;
 import ya.qwester345.events.dto.ListOfEvents;
+import ya.qwester345.events.dto.ReadDto;
 import ya.qwester345.events.dto.factory.EventDtoFactory;
 import ya.qwester345.events.service.EventConcertService;
 import ya.qwester345.events.service.EventFilmService;
@@ -36,7 +37,7 @@ public class ServiceFactory implements IFactory {
         this.listOfServices = listOfServices;
     }
 
-    private IEventService<? extends Event> getService(EventType type) {
+    private IEventService<? extends ReadDto> getService(EventType type) {
             IEventService service = null;
         if(type.equals(EventType.CONCERTS)) {
             for (IEventService listOfService : listOfServices) {
@@ -55,29 +56,29 @@ public class ServiceFactory implements IFactory {
     }
 
     @Override
-    public Event add(EventType type, EventDtoFactory eventCreateDto) {
-        IEventService<? extends Event> service = getService(type);
-        Event event = service.add(eventCreateDto);
+    public ReadDto add(EventType type, EventDtoFactory eventCreateDto) {
+        IEventService<? extends ReadDto> service = getService(type);
+        ReadDto event = service.add(eventCreateDto);
         return event;
     }
 
     @Override
     public ListOfEvents<Event> getByType(EventType type, Pageable pageable) {
-        IEventService<? extends Event> service = getService(type);
+        IEventService<? extends ReadDto> service = getService(type);
         ListOfEvents<Event> eventPage = service.getByType(type, pageable);
         return eventPage;
     }
 
     @Override
-    public Event getByUuid(EventType type, UUID uuid) {
-        IEventService<? extends Event> service = getService(type);
-        Event event = service.getByUuid(uuid);
+    public ReadDto getByUuid(EventType type, UUID uuid) {
+        IEventService<? extends ReadDto> service = getService(type);
+        ReadDto event = service.getByUuid(uuid);
         return event;
     }
 
     @Override
     public void update(EventType type, UUID uuid, LocalDateTime lastKnowDtUpdate, EventDtoFactory eventCreateDto) {
-        IEventService<? extends Event> service = getService(type);
-        Event event = service.update(type, uuid, lastKnowDtUpdate, eventCreateDto);
+        IEventService<? extends ReadDto> service = getService(type);
+        ReadDto event = service.update(type, uuid, lastKnowDtUpdate, eventCreateDto);
     }
 }

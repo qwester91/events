@@ -32,18 +32,17 @@ import static org.apache.logging.log4j.util.Strings.isEmpty;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-
-    private final String userServiceUrl;
+    @Value("${users.service.url}")
+    private String userServiceUrl;
 
     private final RestTemplate template;
     private final ObjectMapper mapper;
 
     public JwtFilter(RestTemplateBuilder template,
-                     ObjectMapper mapper,
-                     @Value("${users.service.url}") String userServiceUrl) {
+                     ObjectMapper mapper) {
         this.template = template.build();
         this.mapper = mapper;
-        this.userServiceUrl = userServiceUrl;
+
     }
 
     @Override
@@ -79,8 +78,11 @@ public class JwtFilter extends OncePerRequestFilter {
                 response.setStatus(401);
                 return;
             }
-
+        try{
             user = mapper.readValue(execute.getBody(), UserDto.class);
+        }catch (IOException e){
+            user = null;
+        }
         }
 
         UsernamePasswordAuthenticationToken

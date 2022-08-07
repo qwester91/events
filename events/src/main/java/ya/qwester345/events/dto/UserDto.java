@@ -14,23 +14,23 @@ import java.util.stream.Collectors;
 @JsonDeserialize(builder = UserDto.Builder.class)
 public class UserDto implements UserDetails {
 
-    private final String username;
+    private final String email;
 
     private final Set<GrantedAuthority> authorities;
 
     private final boolean isEnable;
 
-    public UserDto(String username,
+    public UserDto(String email,
                    Set<GrantedAuthority> authorities,
                    boolean isEnable) {
-        this.username = username;
+        this.email = email;
         this.authorities = authorities;
         this.isEnable = isEnable;
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -76,15 +76,15 @@ public class UserDto implements UserDetails {
 
         private Builder() {}
 
-        private String username;
+        private String email;
 
         private Set<GrantedAuthority> authorities;
 
         private boolean isEnable;
 
-        @JsonSetter("mail")
-        public void setUsername(String username) {
-            this.username = username;
+        @JsonSetter("email")
+        public void setUsername(String email) {
+            this.email = email;
         }
 
         @JsonSetter("role")
@@ -102,7 +102,7 @@ public class UserDto implements UserDetails {
         }
 
         public UserDto build() {
-            return new UserDto(username, authorities, isEnable);
+            return new UserDto(email, authorities, isEnable);
         }
     }
 }

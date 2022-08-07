@@ -10,6 +10,7 @@ import ya.qwester345.events.service.utils.api.IClientClassifiers;
 
 import java.io.IOException;
 import java.net.URI;
+import java.rmi.AccessException;
 import java.util.UUID;
 @Component
 public class HttpClientClassifiers implements IClientClassifiers {
@@ -35,14 +36,14 @@ public class HttpClientClassifiers implements IClientClassifiers {
     }
 
 
-    private boolean isExist(URI url,UUID uuid){
+    private boolean isExist(URI url,UUID uuid) {
 
         HttpStatus status =null;
         boolean isExist = false;
         try {
             status = restTemplate.getRequestFactory().createRequest(url, HttpMethod.GET).execute().getStatusCode();
-        } catch (IOException e) {
-           throw new InvalidDtoException("ошибка доступа к справочнику");
+        } catch (IOException e){
+           throw new RuntimeException("не достучались к классифаеру");
         }
         if (status.is2xxSuccessful() ){
             isExist = true;

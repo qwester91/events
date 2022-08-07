@@ -10,11 +10,16 @@ import java.util.Objects;
 public class UsersService implements IUserService {
     @Override
     public UserDto getUser(){
-         UserDto user = (UserDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final UserDto user;
+        final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (Objects.equals("anonymousUser", user)) {
+        if (!Objects.equals("anonymousUser", principal)) {
+            user = (UserDto) principal;
+
+        } else {
             user = null;
         }
+
         return user;
     }
 }

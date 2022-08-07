@@ -1,16 +1,20 @@
 package ya.qwester345.events.dto.factory;
 
+import org.springframework.stereotype.Component;
 import ya.qwester345.events.dao.entity.enums.EventStatus;
 import ya.qwester345.events.dao.entity.enums.EventType;
 import ya.qwester345.events.dto.ConcertCreateDto;
 import ya.qwester345.events.dto.EventCreateDto;
 import ya.qwester345.events.dto.FilmCreateDto;
+import ya.qwester345.events.dto.UserDto;
+import ya.qwester345.events.dto.api.IDtoFactory;
+import ya.qwester345.events.service.UsersService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-public class EventDtoFactory {
+@Component
+public class EventDtoFactory implements IDtoFactory {
 
     private String title;
     private String description;
@@ -27,6 +31,7 @@ public class EventDtoFactory {
     private String author;
 
     public EventDtoFactory() {
+
     }
 
     public String getTitle() {
